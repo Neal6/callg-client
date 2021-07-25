@@ -1,0 +1,24 @@
+.header-wrap-noti {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 18px;
+    background-color: #b3c7ff29;
+    border-radius: 25%;
+    cursor: pointer;
+}
+
+.header-noti-icon {
+    font-size: 22px;
+    color: #042b5d;
+    transform: rotate(10deg);
+}
+
+.header-noti-dropdown {
+    margin-top: 12px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 6px;
+    padding: 4px 6px;
+}

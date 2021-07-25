@@ -1,0 +1,52 @@
+@import "antd/dist/antd.css";
+
+:root {
+  --header-height: 70px;
+  --left-layout-width: 250px;
+}
+
+body {
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  box-sizing: border-box;
+  width: auto;
+  height: auto;
+}
+
+body * {
+  box-sizing: border-box;
+}
+
+body p,
+a,
+i,
+b,
+strong,
+span,
+div {
+  font-size: 14px;
+}
+
+a {
+  text-decoration: none;
+}
+
+body.light {
+  --backgroud-color: #f9fafc;
+}
+
+body.dark {
+  --backgroud-color: #000;
+}
+
+.ant-message-success {
+  font-weight: 600;
+  color: #8c8c8c;
+}
+
+.ant-message-notice-content {
+  border-radius: 10px;
+}

@@ -1,0 +1,42 @@
+.me-form-edit {
+  flex: 1;
+  margin-left: 36px;
+  border-radius: 10px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 24px;
+  max-width: 765px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  .me-form-edit-title {
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+  .me-form-edit-item {
+    width: 49%;
+    margin-bottom: 24px;
+    &--full {
+      width: 100%;
+    }
+    .me-form-edit-item-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #888;
+    }
+  }
+
+  .me-form-edit-buttons {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: center;
+    .me-form-edit-reset {
+      margin-right: 16px;
+      color: #000;
+      background-color: #fff;
+      border: 1px solid #888;
+    }
+  }
+}

@@ -1,0 +1,2 @@
+﻿"Error:"
+"Line 2:The minimum quantity allowed for purchase is 3"

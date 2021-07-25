@@ -1,0 +1,50 @@
+.register-card {
+    width: 400px;
+    max-width: 90vw;
+    background-color: #fff;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    z-index: 1;
+
+    &__title {
+        font-weight: 700;
+        color: #404040;
+        font-size: 1.25rem;
+        margin-bottom: 3rem;
+        text-transform: uppercase;
+        font-family: 'Recursive', sans-serif;
+        letter-spacing: 4px;
+    }
+
+
+    &__input-username {
+        margin-top: 1rem;
+    }
+
+    &__input-password {
+        margin-top: 0.5rem;
+    }
+
+
+    &__hr-line {
+        height: 1px;
+        width: 90%;
+        background-color: #e4e4e4;
+        margin: 1.5rem auto;
+    }
+
+    &__register {
+        color: #4093ff;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
