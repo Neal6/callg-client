@@ -1,29 +1,43 @@
-import React, { useState, useRef } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useRef, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import copy from "copy-to-clipboard";
 import { message } from "antd";
 import { FiCamera } from "react-icons/fi";
+import { IoMdTrash } from "react-icons/io";
+import { HiCheck } from "react-icons/hi";
 
-import ButtonBasic from "@components/ButtonBasic/ButtonBasic";
 import "./meView.scss";
+import ButtonBasic from "@components/ButtonBasic/ButtonBasic";
 import LineBreak from "@components/LineBreak/LineBreak";
 import ModalCropImage from "@components/ModalCropImage/ModalCropImage";
+import * as authAction from "@store/actions/authActions";
+import * as authType from "@store/actionTypes/authType";
+import * as loadingAction from "@store/actions/loadingAction";
+import defaultAvatar from "@assets/images/others/defaultAvatar.png";
 
 type PropTypes = {
   onChangeTab: any;
+  tab: string;
 };
 
 const MeView = (props: PropTypes) => {
+  const dispatch = useDispatch();
   const { fullName, avatar, _id } = useSelector((state: any) => state.auth);
-  const { onChangeTab } = props;
+  const loadingUpdateAvatar = useSelector(
+    (state: any) => state.loading[authType.updateAvatar]
+  );
+  const { onChangeTab, tab } = props;
   const [openCrop, setOpenCrop] = useState<boolean>(false);
   const [imageSelected, setImageSelected] = useState<any>();
   const [imageChanged, setImageChanged] = useState<any>();
   const avatarSelectRef = useRef<any>();
 
-  const onShowCrop = () => {
-    setOpenCrop(true);
-  };
+  useEffect(() => {
+    if (loadingUpdateAvatar === false) {
+      dispatch(loadingAction.loadingClean([authType.updateAvatar]));
+    }
+  }, [loadingUpdateAvatar]);
+
   const onHideCrop = () => {
     setOpenCrop(false);
   };
@@ -48,13 +62,24 @@ const MeView = (props: PropTypes) => {
     });
   };
 
+  const onUpdateAvatar = () => {
+    dispatch(
+      authAction.updateAvatar({
+        userId: _id,
+        body: {
+          newAvatar: imageChanged,
+        },
+      })
+    );
+  };
+
   return (
     <>
       <div className="me-form-view">
         <div className="me-avatar">
-          <img alt="" src={imageChanged || avatar} />
+          <img alt="" src={imageChanged || avatar || defaultAvatar} />
           <label htmlFor="file-avatar" className="me-avatar-change">
-            <span>Thay Avatar</span>
+            <span>Đổi Avatar</span>
             <FiCamera className="me-avatar-change-icon" />
             <input
               id="file-avatar"
@@ -65,6 +90,25 @@ const MeView = (props: PropTypes) => {
             />
           </label>
         </div>
+        {imageChanged && (
+          <div className="me-buttons-update-avatar">
+            <ButtonBasic
+              className="me-button-prev-avatar"
+              onClick={() => {
+                setImageChanged(null);
+              }}
+            >
+              <IoMdTrash />
+            </ButtonBasic>
+            <ButtonBasic
+              className="me-button-change-avatar"
+              onClick={onUpdateAvatar}
+            >
+              <HiCheck />
+            </ButtonBasic>
+          </div>
+        )}
+
         <div className="me-name">{fullName}</div>
         <div
           className="me-id"
@@ -75,23 +119,29 @@ const MeView = (props: PropTypes) => {
         >
           ID: {_id}
         </div>
-        <ButtonBasic
-          className="me-button-edit"
-          onClick={() => {
-            onChangeTab("edit");
-          }}
-        >
-          Cập nhật
-        </ButtonBasic>
         <LineBreak />
-        <ButtonBasic
-          className="me-button-change-password"
-          onClick={() => {
-            onChangeTab("password");
-          }}
-        >
-          Đổi mật khẩu
-        </ButtonBasic>
+        <div className="me-view-menu">
+          <div
+            className={`me-view-menu-item ${
+              tab === "edit" ? "me-view-menu-item--active" : ""
+            } `}
+            onClick={() => {
+              onChangeTab("edit");
+            }}
+          >
+            Thông tin cá nhân
+          </div>
+          <div
+            className={`me-view-menu-item ${
+              tab === "password" ? "me-view-menu-item--active" : ""
+            } `}
+            onClick={() => {
+              onChangeTab("password");
+            }}
+          >
+            Đổi mật khẩu
+          </div>
+        </div>
       </div>
       <ModalCropImage
         visible={openCrop}

@@ -5,12 +5,14 @@ import appReducer from "@store/reducers/appReducer";
 import authReducer from "@store/reducers/authReducer";
 import loadingReducer from "@store/reducers/loadingReducer";
 import socketReducer from "@store/reducers/socketReducer";
+import userReducer from "@store/reducers/userReducer";
 
 const combineReducer = combineReducers({
   app: appReducer,
   auth: authReducer,
-  loading: loadingReducer,
   socketIo: socketReducer,
+  user: userReducer,
+  loading: loadingReducer,
 });
 
 const rootReducer = (state: any, action: any) => {
@@ -19,6 +21,8 @@ const rootReducer = (state: any, action: any) => {
       app: {
         splashLoading: false,
         redirectAuthUrl: state.app.redirectAuthUrl,
+        loadingGlobal: false,
+        prompt: false,
       },
       auth: {
         isLogin: false,

@@ -3,53 +3,59 @@ import { Switch } from "react-router-dom";
 
 import PublicRoute from "@routes/PublicRoute";
 import PrivateRoute from "@routes/PrivateRoute";
-const Logout = React.lazy(() => import("@pages/LogoutPage/LogoutPage"));
-const Home = React.lazy(() => import("@pages/HomePage/Home"));
-const Login = React.lazy(() => import("@pages/LoginPage/Login"));
-const Register = React.lazy(() => import("@pages/RegisterPage/RegisterPage"));
-const NotFoundPage = React.lazy(
-  () => import("@pages/NotFoundPage/NotFoundPage")
-);
-const MePage = React.lazy(() => import("@pages/MePage/MePage"));
-const MainLayout = React.lazy(() => import("@layouts/MainLayout"));
+import Logout from "@pages/LogoutPage/LogoutPage";
+import Home from "@pages/HomePage/Home";
+import Login from "@pages/LoginPage/Login";
+import Register from "@pages/RegisterPage/RegisterPage";
+import NotFoundPage from "@pages/NotFoundPage/NotFoundPage";
+import MePage from "@pages/MePage/MePage";
+import MainLayout from "@layouts/MainLayout";
+import ProfilePage from "@pages/ProfilePage/ProfilePage";
+import FriendPage from "@pages/FriendPage/FriendPage";
 
 const RootRouter = () => {
   return (
     <Switch>
-      <PrivateRoute
-        path={`${process.env.REACT_APP_ROUTE_HOME}`}
-        exact
-        component={Home}
-        layout={MainLayout}
-      />
-      <PrivateRoute
-        path={`${process.env.REACT_APP_ROUTE_ME}`}
-        exact
-        component={MePage}
-        layout={MainLayout}
-      />
-      <PrivateRoute
-        path={`${process.env.REACT_APP_ROUTE_PROFILE}/:id`}
-        exact
-        component={Home}
-        layout={MainLayout}
-      />
       <PublicRoute
         path={`${process.env.REACT_APP_ROUTE_LOGIN}`}
         exact
         component={Login}
       />
-      <PublicRoute
-        path={`${process.env.REACT_APP_ROUTE_LOGOUT}`}
-        exact
-        component={Logout}
-      />
+
       <PublicRoute
         path={`${process.env.REACT_APP_ROUTE_REGISTER}`}
         exact
         component={Register}
       />
-      <PrivateRoute path={"*"} component={NotFoundPage} />
+      <MainLayout>
+        <Switch>
+          <PrivateRoute
+            path={`${process.env.REACT_APP_ROUTE_LOGOUT}`}
+            exact
+            component={Logout}
+          />
+          <PrivateRoute
+            path={`${process.env.REACT_APP_ROUTE_HOME}`}
+            exact
+            component={Home}
+          />
+          <PrivateRoute
+            path={`${process.env.REACT_APP_ROUTE_ME}`}
+            exact
+            component={MePage}
+          />
+          <PrivateRoute
+            path={`${process.env.REACT_APP_ROUTE_PROFILE}/:id`}
+            exact
+            component={ProfilePage}
+          />
+          <PrivateRoute
+            path={`${process.env.REACT_APP_ROUTE_FRIEND}`}
+            component={FriendPage}
+          />
+          <PrivateRoute path={"*"} component={NotFoundPage} />
+        </Switch>
+      </MainLayout>
     </Switch>
   );
 };

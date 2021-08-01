@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, InputProps } from "antd";
+import { Input } from "antd";
 
 import "./textAreaBasic.scss";
 

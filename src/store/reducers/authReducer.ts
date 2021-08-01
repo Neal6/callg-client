@@ -77,6 +77,20 @@ const authReducer = (state = initState, action: AnyAction) => {
         ...action.payload,
       };
     }
+    case authType.updateProfileSuccess: {
+      return {
+        ...state,
+        errorLoginMessage: "",
+        ...action.payload,
+      };
+    }
+    case authType.updateAvatarSuccess: {
+      return {
+        ...state,
+        errorLoginMessage: "",
+        ...action.payload,
+      };
+    }
     default:
       return state;
   }

@@ -1,5 +1,17 @@
 .me-page-wrap {
   display: flex;
-  padding: 16px 24px;
-  align-items: flex-start;
+  padding: 24px;
+  background-color: #f2f3f5;
+  width: fit-content;
+  border-radius: 10px;
+  .me-page-right-content {
+    flex: 1;
+    margin-left: 36px;
+    border-radius: 10px;
+    padding: 24px;
+    max-width: 765px;
+    background-color: #fff;
+    align-self: flex-start;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
 }

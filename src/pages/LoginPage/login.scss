@@ -1,5 +1,5 @@
 .login-wrap {
-  background-color: #f9fafc;
+  background-color: #fff;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -13,25 +13,12 @@
   background-size: cover;
 }
 
-.login-logo {
-  margin-top: 30px;
-  margin-bottom: 1.5rem;
-
-  @media screen and(max-width:576px) {
-    margin-top: 1rem;
-  }
-
-  img {
-    width: 250px;
-  }
-}
-
 .login-policy {
   margin-top: 1rem;
   padding: 0.5rem;
 
   span {
-    font-size: 12px;
+    font-size: 13px;
     color: #0052cc;
     letter-spacing: 0.3px;
   }
@@ -49,7 +36,6 @@
   font-size: 13px;
   font-weight: 600;
   color: #5f5f5f;
-  margin-top: 4rem;
   text-align: center;
 
   @media screen and(max-width:576px) {

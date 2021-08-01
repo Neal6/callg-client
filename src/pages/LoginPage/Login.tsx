@@ -2,7 +2,6 @@ import React from "react";
 
 import "@pages/LoginPage/login.scss";
 import LoginCard from "@pages/LoginPage/components/loginCard/LoginCard";
-import Logo from "@assets/images/logos/logo-icon.png";
 
 const Login = () => {
   return (
@@ -17,7 +16,7 @@ const Login = () => {
         <span>Điều khoản dịch vụ</span>
       </div>
       <div className="login-address-footer">
-        Task Manage © 2021, Số 1 Ngõ 22 Lưu Xá Đức Giang Hoài Đức Hà Nội
+        CallG © 2021, Số 1 Ngõ 22 Lưu Xá Đức Giang Hoài Đức Hà Nội
       </div>
     </div>
   );

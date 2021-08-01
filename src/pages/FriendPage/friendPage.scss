@@ -1,0 +1,35 @@
+.wrap-friend-page {
+  padding-bottom: 16px;
+  margin: 0px 24px;
+  .friend-page-header {
+    display: flex;
+    align-items: center;
+    margin: 0px -4px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #0000000f;
+    .friend-page-header-item {
+      color: #888;
+      margin: 0px 4px;
+      font-weight: 600;
+      border-radius: 3px;
+      padding: 2px 12px;
+      &--active {
+        background-color: rgba(116, 127, 141, 0.24) !important;
+        color: #000;
+      }
+      &:hover {
+        background-color: rgba(116, 127, 141, 0.08);
+        color: #000;
+      }
+    }
+
+    .friend-page-header-item-add {
+      background-color: #4caf50;
+      color: #fff;
+      &:hover {
+        background-color: #4caf50;
+        color: #fff;
+      }
+    }
+  }
+}

@@ -52,3 +52,17 @@ export const logout = () => {
     type: actions.logout,
   };
 };
+
+export const updateProfile = (payload:any) => {
+  return {
+    type: actions.updateProfile,
+    payload
+  };
+};
+
+export const updateAvatar = (payload:any) => {
+  return {
+    type: actions.updateAvatar,
+    payload
+  };
+};

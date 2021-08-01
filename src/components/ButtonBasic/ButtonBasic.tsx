@@ -13,7 +13,12 @@ type PropTypes = {
 const ButtonBasic = (props: PropTypes) => {
   const { className, style, children, ...rest } = props;
   return (
-    <button className={`button-basic ${className}`} style={style} {...rest}>
+    <button
+      type="button"
+      className={`button-basic ${className}`}
+      style={style}
+      {...rest}
+    >
       {children}
     </button>
   );

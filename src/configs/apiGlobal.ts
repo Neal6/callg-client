@@ -1,6 +1,11 @@
+//@ts-nocheck
+
 import axios from "axios";
 
 import * as localStorage from "@utils/localStorage";
+import store from '@store/store';
+import * as actionApp from "@store/actions/appActions";
+
 
 const apiGlobal = axios.create({
   baseURL: `${process.env.REACT_APP_BASE_API_URL}/api`,
@@ -23,7 +28,7 @@ apiGlobal.interceptors.request.use(
 
 apiGlobal.interceptors.response.use(
   async (response) => {
-    return response;
+    return response.data;
   },
   async (error) => {
     const originalRequest = error.config;
@@ -35,18 +40,25 @@ apiGlobal.interceptors.response.use(
         });
 
         if (refreshRes) {
-          localStorage.setItem("access_token", refreshRes.data.access_token);
-          localStorage.setItem("refresh_token", refreshRes.data.refresh_token);
+          localStorage.setItem("access_token", refreshRes.access_token);
+          localStorage.setItem("refresh_token", refreshRes.refresh_token);
         }
         originalRequest.headers[
           "Authorization"
-        ] = `Bearer ${refreshRes.data.access_token}`;
+        ] = `Bearer ${refreshRes.access_token}`;
 
         return apiGlobal(originalRequest);
       } catch (error) {
-        localStorage.clear();
-        window.location.pathname = "/login";
+        store.dispatch(actionApp.splashLoadingDone())
+      localStorage.clear();
+        store.getState().app.history.push(`${process.env.REACT_APP_ROUTE_LOGOUT}`)
       }
+    };
+    if (error.response.status === 403) {
+      store.dispatch(actionApp.splashLoadingDone())
+      localStorage.clear();
+      store.getState().app.history.push(`${process.env.REACT_APP_ROUTE_LOGOUT}`)
+
     }
     return Promise.reject(error);
   }

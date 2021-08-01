@@ -1,77 +1,71 @@
 .register-wrap {
-    background-color: #F9FAFC;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    z-index: 1;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    background-size: cover;
+  background-color: #fff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .register-logo {
-    margin-bottom: 1.5rem;
-    margin-top: 30px;
+  margin-bottom: 1.5rem;
+  margin-top: 30px;
 
-    @media screen and(max-width:576px) {
-        margin-top: 1rem;
-    }
+  @media screen and(max-width:576px) {
+    margin-top: 1rem;
+  }
 
-    img {
-        width: 250px;
-    }
-
-
+  img {
+    width: 250px;
+  }
 }
 
 .register-policy {
-    margin-top: 1rem;
-    padding: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.5rem;
 
-    span {
-        font-size: 12px;
-        color: #0052CC;
-        letter-spacing: 0.3px;
+  span {
+    font-size: 13px;
+    color: #0052cc;
+    letter-spacing: 0.3px;
+  }
 
-
-    }
-
-    &__dot {
-        color: #000 !important;
-        display: inline-block;
-        font-size: 24px !important;
-        transform: translateY(5px);
-        margin: 0px 4px;
-    }
-
+  &__dot {
+    color: #000 !important;
+    display: inline-block;
+    font-size: 24px !important;
+    transform: translateY(5px);
+    margin: 0px 4px;
+  }
 }
 
 .register-address-footer {
-    font-size: 13px;
-    font-weight: 600;
-    color: #5f5f5f;
-    margin-top: 4rem;
-    text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #5f5f5f;
+  text-align: center;
 
-    @media screen and(max-width:576px) {
-        margin-top: 1rem;
-        width: 90%;
-    }
+  @media screen and(max-width:576px) {
+    margin-top: 1rem;
+    width: 90%;
+  }
 }
 
 .register-footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    z-index: 0;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  z-index: 0;
 
-    img {
-        width: 400px;
-    }
+  img {
+    width: 400px;
+  }
 }

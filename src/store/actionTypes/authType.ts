@@ -23,4 +23,12 @@ export const loginWithGithubSuccess = "LOGIN_WITH_GITHUB_SUCCESS";
 export const loginWithFacebook = "LOGIN_WITH_FACEBOOK";
 export const loginWithFacebookSuccess = "LOGIN_WITH_FACEBOOK_SUCCESS";
 
+export const updateProfile = "UPDATE_PROFILE";
+export const updateProfileStart = "UPDATE_PROFILE_START";
+export const updateProfileSuccess = "UPDATE_PROFILE_SUCCESS";
+
+export const updateAvatar = "UPDATE_AVATAR";
+export const updateAvatarStart = "UPDATE_AVATAR_START";
+export const updateAvatarSuccess = "UPDATE_AVATAR_SUCCESS";
+
 export const logout = "LOGOUT";

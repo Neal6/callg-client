@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import jwt_decode from "jwt-decode";
+import { CgArrowsExchangeAlt } from "react-icons/cg";
 
 import "@pages/LoginPage/components/loginCard/loginCard.scss";
 import InputTextBasic from "@components/InputTextBasic/InputTextBasic";
@@ -21,6 +23,11 @@ import AzureAuthenticationContext from "@configs/azureAuthenticationContext";
 import { loginWithGithub } from "@configs/loginWithGithub";
 import { loginWithFacebook } from "@configs/loginWithFacebook";
 
+interface IFormLogin {
+  username: string;
+  password: string;
+}
+
 const LoginCard = () => {
   const dispatch = useDispatch();
   const loadingLogin = useSelector(
@@ -32,16 +39,22 @@ const LoginCard = () => {
   const authenticationModule: AzureAuthenticationContext =
     new AzureAuthenticationContext();
 
-  const { register, handleSubmit, errors } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormLogin>();
 
   useEffect(() => {
-    gapi.load("auth2", () => {
-      const auth2 = gapi.auth2.init({
-        client_id:
-          "289758838668-4r50lv7n2oifn4pmicpnvd0p728gk755.apps.googleusercontent.com",
+    if (gapi) {
+      gapi.load("auth2", () => {
+        const auth2 = gapi.auth2.init({
+          client_id:
+            "289758838668-4r50lv7n2oifn4pmicpnvd0p728gk755.apps.googleusercontent.com",
+        });
+        setGoogleAuth(auth2);
       });
-      setGoogleAuth(auth2);
-    });
+    }
   }, []);
 
   const onLogin = (data: any) => {
@@ -55,14 +68,14 @@ const LoginCard = () => {
         ux_mode: "popup",
       });
       if (googleUser) {
-        const basicUser = googleUser.getBasicProfile();
+        const basicUser = jwt_decode(googleUser.getAuthResponse().id_token);
         dispatch(
           actionAuth.loginWithGoogle({
-            firstName: basicUser.QT,
-            lastName: basicUser.SR,
-            fullName: basicUser.Me,
-            avatar: basicUser.gJ,
-            email: basicUser.Dt,
+            firstName: basicUser.given_name,
+            lastName: basicUser.family_name,
+            fullName: basicUser.name,
+            avatar: basicUser.picture,
+            email: basicUser.email,
           })
         );
       }
@@ -132,13 +145,50 @@ const LoginCard = () => {
 
   return (
     <div className="login-card">
-      <p className="login-card__title">Đăng nhập</p>
-      <TextError>{errorLoginMessage}</TextError>
-      <form onSubmit={handleSubmit(onLogin)} style={{ width: "100%" }}>
+      <div className="login-card-oauth">
+        <p className="login-card__title">Đăng nhập nhanh</p>
+        <p className="login-card-sub-title">
+          Tham gia nhanh bằng các tài khoản mạng xã hội khác
+        </p>
+        <div
+          className="login-card-with"
+          id="login-google"
+          onClick={onLoginGoogle}
+        >
+          <img src={GoogleIcon} alt="" />
+          <span>Đăng nhập bằng Google</span>
+        </div>
+        <div className="login-card-with" onClick={onLoginFacebook}>
+          <img src={FacebookIcon} alt="" />
+          <span>Đăng nhập bằng Facebook</span>
+        </div>
+        <div
+          className="login-card-with"
+          onClick={onLoginMicrosoft("loginPopup")}
+        >
+          <img src={MicrosoftIcon} alt="" />
+          <span>Tiếp tục với Microsoft</span>
+        </div>
+
+        <div className="login-card-with" onClick={onLoginGithub}>
+          <img src={GithubIcon} alt="" />
+          <span>Tiếp tục với Github</span>
+        </div>
+      </div>
+      <div className="login-card-line-center">
+        <div className="login-card-line-button-icon">
+          <CgArrowsExchangeAlt className="login-card-line-icon" />
+        </div>
+      </div>
+      <form className="login-card-form" onSubmit={handleSubmit(onLogin)}>
+        <p className="login-card-form-title">Email</p>
+        <p className="login-card-form-sub-title">
+          Sử dụng tài khoản email để đăng nhập
+        </p>
+        <TextError>{errorLoginMessage}</TextError>
         <InputTextBasic
-          name="username"
           placeholder="abc@gmail.com"
-          ref={register({
+          {...register("username", {
             required: true,
             pattern:
               /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -155,50 +205,20 @@ const LoginCard = () => {
           </TextErrorValidate>
         )}
         <InputPassword
-          name="password"
           placeholder="Mật khẩu"
-          ref={register({ required: true })}
+          {...register("password", { required: true })}
           className="login-card__input-password"
         />
         {errors.password?.type === "required" && (
           <TextErrorValidate>Mật khẩu không được để trống</TextErrorValidate>
         )}
-        <ButtonSubmit
-          disabled={loadingLogin}
-          style={{ width: "100%", marginTop: "1rem" }}
-        >
-          {loadingLogin ? "Loading..." : "Đăng nhập"}
+        <ButtonSubmit disabled={loadingLogin} className="login-form-submit">
+          {loadingLogin ? "Loading..." : "Đăng Nhập"}
         </ButtonSubmit>
+        <Link className="login-card__register" to="/register">
+          Chưa có tài khoản?
+        </Link>
       </form>
-      <p className="login-card__text-or">HOẶC</p>
-
-      <div
-        className="login-card__with"
-        id="login-google"
-        onClick={onLoginGoogle}
-      >
-        <img src={GoogleIcon} alt="" />
-        <span>Tiếp tục với Google</span>
-      </div>
-      <div
-        className="login-card__with"
-        onClick={onLoginMicrosoft("loginPopup")}
-      >
-        <img src={MicrosoftIcon} alt="" />
-        <span>Tiếp tục với Microsoft</span>
-      </div>
-      <div className="login-card__with" onClick={onLoginFacebook}>
-        <img src={FacebookIcon} alt="" />
-        <span>Tiếp tục với Facebook</span>
-      </div>
-      <div className="login-card__with" onClick={onLoginGithub}>
-        <img src={GithubIcon} alt="" />
-        <span>Tiếp tục với Github</span>
-      </div>
-      <div className="login-card__hr-line"></div>
-      <Link className="login-card__register" to="/register">
-        Đăng ký tài khoản
-      </Link>
     </div>
   );
 };

@@ -1,8 +1,8 @@
 @import "antd/dist/antd.css";
 
 :root {
-  --header-height: 70px;
-  --left-layout-width: 250px;
+  --header-height: 50px;
+  --left-layout-width: 320px;
 }
 
 body {
@@ -49,4 +49,16 @@ body.dark {
 
 .ant-message-notice-content {
   border-radius: 10px;
+}
+
+.ant-tooltip {
+  font-weight: 600;
+}
+
+.ant-tooltip-inner {
+  font-size: 12px;
+  min-height: fit-content;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: #000;
 }

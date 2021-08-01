@@ -1,0 +1,24 @@
+.wrap-friend-add {
+  margin-top: 16px;
+  max-width: 1000px;
+  .friend-add-big-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 8px;
+  }
+  .friend-add-sub-title {
+    color: #2e3338;
+    font-size: 13.5px;
+  }
+  .friend-add-empty {
+    width: 100%;
+    text-align: center;
+    padding-top: 100px;
+    .friend-add-empty-text {
+      color: #bdbdbd;
+      margin-top: 24px;
+      word-spacing: 2px;
+    }
+  }
+}

@@ -1,10 +1,12 @@
 //@ts-nocheck
 
 import { takeLatest, put } from "redux-saga/effects";
+import { toast } from "react-toastify";
 
 import * as actionAuthType from "@store/actionTypes/authType";
 import * as authService from "@services/authService";
 import * as localStorage from "@utils/localStorage";
+import * as userService from "@services/userService";
 
 function* login(action: any) {
   yield put({ type: actionAuthType.loginStart });
@@ -12,10 +14,10 @@ function* login(action: any) {
     const loginRes = yield authService.login(action.payload.data);
     yield put({
       type: actionAuthType.loginSuccess,
-      payload: loginRes.data.user,
+      payload: loginRes.user,
     });
-    localStorage.setItem("access_token", loginRes.data.user.access_token);
-    localStorage.setItem("refresh_token", loginRes.data.user.refresh_token);
+    localStorage.setItem("access_token", loginRes.user.access_token);
+    localStorage.setItem("refresh_token", loginRes.user.refresh_token);
   } catch (error) {
     yield put({
       type: actionAuthType.loginFail,
@@ -29,7 +31,7 @@ function* loginWithToken(action: any) {
     const loginRes = yield authService.loginWithToken();
     yield put({
       type: actionAuthType.loginSuccess,
-      payload: loginRes.data.user,
+      payload: loginRes.user,
     });
   } catch (error) {}
 }
@@ -40,10 +42,10 @@ function* register(action: any) {
     const registerRes = yield authService.register(action.payload.data);
     yield put({
       type: actionAuthType.registerSuccess,
-      payload: registerRes.data.user,
+      payload: registerRes.user,
     });
-    localStorage.setItem("access_token", registerRes.data.user.access_token);
-    localStorage.setItem("refresh_token", registerRes.data.user.refresh_token);
+    localStorage.setItem("access_token", registerRes.user.access_token);
+    localStorage.setItem("refresh_token", registerRes.user.refresh_token);
   } catch (error) {
     yield put({
       type: actionAuthType.registerFail,
@@ -57,10 +59,10 @@ function* loginWithGoogle(action: any) {
     const loginRes = yield authService.loginWithGoogle(action.payload);
     yield put({
       type: actionAuthType.loginWithGoogleSuccess,
-      payload: loginRes.data.user,
+      payload: loginRes.user,
     });
-    localStorage.setItem("access_token", loginRes.data.user.access_token);
-    localStorage.setItem("refresh_token", loginRes.data.user.refresh_token);
+    localStorage.setItem("access_token", loginRes.user.access_token);
+    localStorage.setItem("refresh_token", loginRes.user.refresh_token);
   } catch (error) {}
 }
 
@@ -69,10 +71,10 @@ function* loginWithMicrosoft(action: any) {
     const loginRes = yield authService.loginWithMicrosoft(action.payload);
     yield put({
       type: actionAuthType.loginWithMicrosoftSuccess,
-      payload: loginRes.data.user,
+      payload: loginRes.user,
     });
-    localStorage.setItem("access_token", loginRes.data.user.access_token);
-    localStorage.setItem("refresh_token", loginRes.data.user.refresh_token);
+    localStorage.setItem("access_token", loginRes.user.access_token);
+    localStorage.setItem("refresh_token", loginRes.user.refresh_token);
   } catch (error) {}
 }
 
@@ -81,10 +83,10 @@ function* loginWithGithub(action: any) {
     const loginRes = yield authService.loginWithGithub(action.payload);
     yield put({
       type: actionAuthType.loginWithGithubSuccess,
-      payload: loginRes.data.user,
+      payload: loginRes.user,
     });
-    localStorage.setItem("access_token", loginRes.data.user.access_token);
-    localStorage.setItem("refresh_token", loginRes.data.user.refresh_token);
+    localStorage.setItem("access_token", loginRes.user.access_token);
+    localStorage.setItem("refresh_token", loginRes.user.refresh_token);
   } catch (error) {}
 }
 
@@ -93,11 +95,42 @@ function* loginWithFacebook(action: any) {
     const loginRes = yield authService.loginWithFacebook(action.payload);
     yield put({
       type: actionAuthType.loginWithFacebookSuccess,
-      payload: loginRes.data.user,
+      payload: loginRes.user,
     });
-    localStorage.setItem("access_token", loginRes.data.user.access_token);
-    localStorage.setItem("refresh_token", loginRes.data.user.refresh_token);
+    localStorage.setItem("access_token", loginRes.user.access_token);
+    localStorage.setItem("refresh_token", loginRes.user.refresh_token);
   } catch (error) {}
+}
+
+function* updateProfile(action: any) {
+  yield put({
+    type:actionAuthType.updateProfileStart
+  })
+  try {
+    const res = yield userService.updateUser(action.payload);
+    toast("Cập nhật thông tin thành công");
+    yield put({
+      type: actionAuthType.updateProfileSuccess,
+      payload: res.data,
+    });
+  } catch (error) {
+
+  }
+}
+function* updateAvatar(action: any) {
+  yield put({
+    type:actionAuthType.updateAvatarStart
+  })
+  try {
+    const res = yield userService.updateAvatarUser(action.payload);
+    toast("Cập nhật avatar thành công");
+    yield put({
+      type: actionAuthType.updateAvatarSuccess,
+      payload: res.data,
+    });
+  } catch (error) {
+
+  }
 }
 
 function* authSaga() {
@@ -108,6 +141,8 @@ function* authSaga() {
   yield takeLatest(actionAuthType.loginWithMicrosoft, loginWithMicrosoft);
   yield takeLatest(actionAuthType.loginWithGithub, loginWithGithub);
   yield takeLatest(actionAuthType.loginWithFacebook, loginWithFacebook);
+  yield takeLatest(actionAuthType.updateProfile, updateProfile);
+  yield takeLatest(actionAuthType.updateAvatar, updateAvatar);
 }
 
 export default authSaga;

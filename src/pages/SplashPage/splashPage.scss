@@ -1,12 +1,15 @@
 .splash-page {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #F9FAFC;
-
-    img {
-        width: 200px;
-    }
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9fafc;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  img {
+    width: 200px;
+  }
 }

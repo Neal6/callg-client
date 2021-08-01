@@ -69,6 +69,23 @@
     border-radius: 25%;
   }
 
+  .reactEasyCrop_Container_width_full {
+    .reactEasyCrop_Contain {
+      max-width: unset;
+      max-height: unset;
+      width: 350px;
+      height: auto;
+    }
+  }
+  .reactEasyCrop_Container_height_full {
+    .reactEasyCrop_Contain {
+      max-width: unset;
+      max-height: unset;
+      width: auto;
+      height: 350px;
+    }
+  }
+
   .modal-crop-avatar-zoom {
     display: flex;
     width: 100%;

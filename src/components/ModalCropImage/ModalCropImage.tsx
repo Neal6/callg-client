@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Modal, Slider } from "antd";
 import { BsImage } from "react-icons/bs";
 import Cropper from "react-easy-crop";
@@ -18,7 +18,17 @@ const ModalCropImage = (props: PropTypes) => {
   const [crop, setCrop] = useState<any>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState<number>(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
-  const [croppedImage, setCroppedImage] = useState<any>(null);
+  const [imageWidth, setImageWidth] = useState<number>(0);
+  const [imageHeight, setImageHeight] = useState<number>(0);
+
+  useEffect(() => {
+    const img = new Image();
+    img.onload = (e: any) => {
+      setImageWidth(e.target.naturalWidth);
+      setImageHeight(e.target.naturalHeight);
+    };
+    img.src = image;
+  }, [image]);
 
   const onCropComplete = useCallback(
     (croppedArea: any, croppedAreaPixels: any) => {
@@ -31,6 +41,8 @@ const ModalCropImage = (props: PropTypes) => {
     try {
       const croppedImage = await getCroppedImg(image, croppedAreaPixels, 0);
       setZoom(1);
+      setCroppedAreaPixels(null);
+      setCrop({ x: 0, y: 0 });
       onCropDone(croppedImage);
     } catch (e) {
       console.error(e);
@@ -44,10 +56,12 @@ const ModalCropImage = (props: PropTypes) => {
       onOk={onCropImage}
       onCancel={() => {
         setZoom(1);
+        setCroppedAreaPixels(null);
+        setCrop({ x: 0, y: 0 });
         onCancel();
       }}
       wrapClassName="modal-crop-avatar"
-      okText="Thêm"
+      okText="Thay ảnh"
       cancelText="Hủy"
       destroyOnClose
     >
@@ -57,8 +71,15 @@ const ModalCropImage = (props: PropTypes) => {
             image={image}
             crop={crop}
             zoom={zoom}
-            aspect={3 / 3}
+            aspect={1 / 1}
+            cropSize={{ width: 350, height: 350 }}
             showGrid={false}
+            classes={{
+              containerClassName:
+                imageWidth > imageHeight
+                  ? "reactEasyCrop_Container_height_full"
+                  : "reactEasyCrop_Container_width_full",
+            }}
             onCropChange={setCrop}
             onCropComplete={onCropComplete}
             onZoomChange={setZoom}

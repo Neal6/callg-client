@@ -1,10 +1,4 @@
 .me-form-edit {
-  flex: 1;
-  margin-left: 36px;
-  border-radius: 10px;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  padding: 24px;
-  max-width: 765px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -37,6 +31,10 @@
       color: #000;
       background-color: #fff;
       border: 1px solid #888;
+    }
+    .me-form-edit-submit {
+      padding: 6px 12px;
+      font-weight: 600;
     }
   }
 }

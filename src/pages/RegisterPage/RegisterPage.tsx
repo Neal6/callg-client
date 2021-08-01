@@ -1,6 +1,5 @@
 import "@pages/RegisterPage/registerPage.scss";
 import RegisterCard from "@pages/RegisterPage/components/registerCard/RegisterCard";
-import Logo from "@assets/images/logos/logo-icon.png";
 
 const RegisterPage = () => {
   return (
@@ -15,7 +14,7 @@ const RegisterPage = () => {
         <span>Điều khoản dịch vụ</span>
       </div>
       <div className="register-address-footer">
-        Task Manage © 2021, Số 1 Ngõ 22 Lưu Xá Đức Giang Hoài Đức Hà Nội
+        CallG © 2021, Số 1 Ngõ 22 Lưu Xá Đức Giang Hoài Đức Hà Nội
       </div>
     </div>
   );
