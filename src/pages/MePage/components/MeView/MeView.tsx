@@ -14,6 +14,7 @@ import * as authAction from "@store/actions/authActions";
 import * as authType from "@store/actionTypes/authType";
 import * as loadingAction from "@store/actions/loadingAction";
 import defaultAvatar from "@assets/images/others/defaultAvatar.png";
+import { convertLoadingState } from "@utils/validate";
 
 type PropTypes = {
   onChangeTab: any;
@@ -23,8 +24,8 @@ type PropTypes = {
 const MeView = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { fullName, avatar, _id } = useSelector((state: any) => state.auth);
-  const loadingUpdateAvatar = useSelector(
-    (state: any) => state.loading[authType.updateAvatar]
+  const loadingUpdateAvatar = useSelector((state: any) =>
+    convertLoadingState(state.loading[authType.updateAvatar])
   );
   const { onChangeTab, tab } = props;
   const [openCrop, setOpenCrop] = useState<boolean>(false);
@@ -33,8 +34,14 @@ const MeView = (props: PropTypes) => {
   const avatarSelectRef = useRef<any>();
 
   useEffect(() => {
-    if (loadingUpdateAvatar === false) {
+    return () => {
       dispatch(loadingAction.loadingClean([authType.updateAvatar]));
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!loadingUpdateAvatar) {
+      setImageChanged(null);
     }
   }, [loadingUpdateAvatar]);
 

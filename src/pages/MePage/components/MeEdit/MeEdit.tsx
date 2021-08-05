@@ -49,7 +49,9 @@ const MeEdit = () => {
   }, []);
 
   useEffect(() => {
-    return () => {};
+    return () => {
+      dispatch(loadingAction.loadingClean([authType.updateProfile]));
+    };
   }, []);
 
   useEffect(() => {
@@ -69,7 +71,6 @@ const MeEdit = () => {
         phone,
         introduce,
       });
-      dispatch(loadingAction.loadingClean([authType.updateProfile]));
     }
   }, [loadingUpdateProfile]);
 

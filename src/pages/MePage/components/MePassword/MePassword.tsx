@@ -26,12 +26,13 @@ const MePassword = () => {
   const { register, handleSubmit, reset } = useForm<formTypes>();
 
   useEffect(() => {
-    return () => {};
+    return () => {
+      dispatch(loadingAction.loadingClean([authType.updateProfile]));
+    };
   }, []);
 
   useEffect(() => {
     if (!loadingUpdateProfile) {
-      dispatch(loadingAction.loadingClean([authType.updateProfile]));
     }
   }, [loadingUpdateProfile]);
 

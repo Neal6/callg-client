@@ -49,15 +49,15 @@ apiGlobal.interceptors.response.use(
 
         return apiGlobal(originalRequest);
       } catch (error) {
-        store.dispatch(actionApp.splashLoadingDone())
-      localStorage.clear();
+        localStorage.clear();
         store.getState().app.history.push(`${process.env.REACT_APP_ROUTE_LOGOUT}`)
+        store.dispatch(actionApp.splashLoadingDone())
       }
     };
     if (error.response.status === 403) {
-      store.dispatch(actionApp.splashLoadingDone())
       localStorage.clear();
       store.getState().app.history.push(`${process.env.REACT_APP_ROUTE_LOGOUT}`)
+      store.dispatch(actionApp.splashLoadingDone())
 
     }
     return Promise.reject(error);

@@ -12,6 +12,7 @@ import * as userType from "@store/actionTypes/userType";
 import ButtonBasic from "@components/ButtonBasic/ButtonBasic";
 import { convertLoadingState } from "@utils/validate";
 import defaultAvatar from "@assets/images/others/defaultAvatar.png";
+import emptyUserImage from "@assets/images/svg/empty-online.svg";
 
 type paramTypes = {
   id: string;
@@ -46,7 +47,10 @@ const ProfilePage = () => {
   return (
     <div className="wrap-profile">
       {errorGetUser ? (
-        <div>Không tìm thấy người này</div>
+        <div className="profile-empty">
+          <img alt="" src={emptyUserImage} />
+          <p>Không tìm thấy người dùng này</p>
+        </div>
       ) : (
         <>
           {getUserLoading ? (

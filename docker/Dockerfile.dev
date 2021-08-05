@@ -1,0 +1,13 @@
+FROM node:14.17.4-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN yarn cache clean && rm -rf node_modules && yarn
+
+COPY . .
+
+EXPOSE 8002
+
+CMD [ "yarn", "start" ]
