@@ -20,7 +20,7 @@ const rootReducer = (state: any, action: any) => {
     state = {
       app: {
         splashLoading: false,
-        redirectAuthUrl: state.app.redirectAuthUrl,
+        redirectAuthUrl: "/",
         loadingGlobal: false,
         prompt: false,
       },

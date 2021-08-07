@@ -17,10 +17,11 @@ services:
       - CHOKIDAR_USEPOLLING=true
 
     networks:
-      - callg-server
+      - callg
 networks:
-  callg-server:
+  callg:
     driver: bridge
+    name: callg
 
 volumes:
   exclude:

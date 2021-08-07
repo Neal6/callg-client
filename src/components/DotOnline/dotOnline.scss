@@ -1,0 +1,23 @@
+.dot-online-wrap {
+  padding: 3px;
+  background-color: #fff;
+  border-radius: 50%;
+  .dot-online {
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+  }
+}
+
+.dot-offline-wrap {
+  padding: 3px;
+  background-color: #fff;
+  border-radius: 50%;
+  .dot-offline {
+    width: 10px;
+    height: 10px;
+    background-color: #888;
+    border-radius: 50%;
+  }
+}

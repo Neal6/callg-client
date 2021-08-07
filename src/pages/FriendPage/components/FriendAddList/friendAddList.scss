@@ -1,0 +1,22 @@
+.friend-add-list {
+  .friend-add-list-loading {
+    margin-top: 16px;
+  }
+  .friend-add-list-title {
+    margin-top: 16px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #888;
+    margin-bottom: 16px;
+  }
+  .friend-add-list-empty {
+    width: 100%;
+    text-align: center;
+    padding-top: 100px;
+    .friend-add-list-empty-text {
+      color: #bdbdbd;
+      margin-top: 24px;
+      word-spacing: 2px;
+    }
+  }
+}

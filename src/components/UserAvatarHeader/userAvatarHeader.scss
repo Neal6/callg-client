@@ -1,65 +1,64 @@
 .user-avatar-header {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 
-    .avatar {
-        border-radius: 25%;
-        width: 34px;
-        height: 34px;
-        object-fit: contain;
-        margin-right: 0.75rem;
-    }
+  .avatar {
+    border-radius: 25%;
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    margin-right: 0.75rem;
+  }
 
-    .name {
-        font-weight: 600;
-    }
+  .name {
+    font-weight: 400;
+  }
 }
 
 .user-avatar-header-menu {
-    margin-top: 12px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  margin-top: 12px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 6px;
+  padding: 4px 6px;
+
+  .user-dropdown {
+    display: flex;
+    align-items: center;
+
+    &__avatar {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      border-radius: 30%;
+      margin-right: 8px;
+    }
+
+    &__name {
+      display: block;
+      font-weight: 400;
+    }
+
+    &__small-text {
+      display: block;
+      font-size: 13px;
+      color: #6f6f6f;
+      line-height: 0.75rem;
+    }
+  }
+
+  .ant-dropdown-menu-item {
+    font-weight: 400;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .item-disabled {
+    color: #6f6f6f;
+    cursor: default;
+  }
+
+  .ant-dropdown-menu-item:hover {
     border-radius: 6px;
-    padding: 4px 6px;
-
-    .user-dropdown {
-        display: flex;
-        align-items: center;
-
-        &__avatar {
-            width: 42px;
-            height: 42px;
-            object-fit: contain;
-            border-radius: 30%;
-            margin-right: 8px;
-        }
-
-        &__name {
-            display: block;
-            font-weight: 600;
-        }
-
-        &__small-text {
-            display: block;
-            font-size: 13px;
-            color: #6f6f6f;
-            line-height: 0.75rem;
-        }
-    }
-
-    .ant-dropdown-menu-item {
-        font-weight: 600;
-        padding-top: 8px;
-        padding-bottom: 8px;
-    }
-
-    .item-disabled {
-        color: #6f6f6f;
-        cursor: default;
-
-    }
-
-    .ant-dropdown-menu-item:hover {
-        border-radius: 6px;
-    }
+  }
 }

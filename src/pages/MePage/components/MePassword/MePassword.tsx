@@ -10,7 +10,6 @@ import ButtonSubmit from "@components/ButtonSubmit/ButtonSubmit";
 import * as authAction from "@store/actions/authActions";
 import * as authType from "@store/actionTypes/authType";
 import * as loadingAction from "@store/actions/loadingAction";
-import { convertLoadingState } from "@utils/validate";
 
 type formTypes = {
   newPassword: string;
@@ -20,8 +19,8 @@ type formTypes = {
 const MePassword = () => {
   const dispatch = useDispatch();
   const { _id } = useSelector((state: any) => state.auth);
-  const loadingUpdateProfile = useSelector((state: any) =>
-    convertLoadingState(state.loading[authType.updateProfile])
+  const loadingUpdateProfile = useSelector(
+    (state: any) => state.loading[authType.updateProfile]
   );
   const { register, handleSubmit, reset } = useForm<formTypes>();
 
@@ -32,7 +31,7 @@ const MePassword = () => {
   }, []);
 
   useEffect(() => {
-    if (!loadingUpdateProfile) {
+    if (loadingUpdateProfile === false) {
     }
   }, [loadingUpdateProfile]);
 

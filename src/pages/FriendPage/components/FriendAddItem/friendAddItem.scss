@@ -1,0 +1,98 @@
+.friend-add-item-wrap {
+  cursor: pointer;
+  &:hover {
+    background-color: #0606070d;
+    border-radius: 8px;
+    & > .friend-add-item {
+      border-top: 1px solid transparent;
+    }
+  }
+}
+
+.friend-add-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0px;
+  margin: 0px 16px;
+  border-top: 1px solid #0606070d;
+  .friend-add-item-avatar {
+    position: relative;
+    margin-right: 12px;
+    .friend-add-item-avatar-image {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+      border-radius: 25%;
+    }
+    .friend-add-item-avatar-status {
+      position: absolute;
+      right: -5px;
+      bottom: -5px;
+    }
+  }
+  .friend-add-item-info {
+    flex: 1;
+    .friend-add-item-name-wrap {
+      display: flex;
+      align-items: center;
+    }
+    .friend-add-item-name {
+      font-weight: 500;
+      color: #000;
+      margin: 0;
+    }
+    .friend-add-item-info-id {
+      font-size: 13px;
+      color: #7b7b7b;
+      font-weight: 400;
+    }
+  }
+  .friend-add-item-status {
+    margin-left: 8px;
+    font-size: 12px;
+    margin-top: 1px;
+    color: #888;
+    &--active {
+      color: #40ab0c;
+      font-weight: 400;
+    }
+  }
+  .friend-add-item-contact {
+    display: flex;
+    align-items: center;
+    .friend-add-item-message {
+      background-color: #f2f3f5;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        color: #5a5a5a;
+        font-size: 18px;
+      }
+    }
+    .friend-add-item-add {
+      margin-left: 12px;
+      background-color: #f2f3f5;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        color: #5a5a5a;
+        font-size: 18px;
+      }
+    }
+    .friend-add-item-add-accept {
+      background-color: #52c41a;
+      svg {
+        color: #fff;
+        font-size: 18px;
+      }
+    }
+  }
+}

@@ -13,8 +13,7 @@ import ModalCropImage from "@components/ModalCropImage/ModalCropImage";
 import * as authAction from "@store/actions/authActions";
 import * as authType from "@store/actionTypes/authType";
 import * as loadingAction from "@store/actions/loadingAction";
-import defaultAvatar from "@assets/images/others/defaultAvatar.png";
-import { convertLoadingState } from "@utils/validate";
+import ImageWithDefault from "@components/ImageWithDefault/ImageWithDefault";
 
 type PropTypes = {
   onChangeTab: any;
@@ -24,8 +23,8 @@ type PropTypes = {
 const MeView = (props: PropTypes) => {
   const dispatch = useDispatch();
   const { fullName, avatar, _id } = useSelector((state: any) => state.auth);
-  const loadingUpdateAvatar = useSelector((state: any) =>
-    convertLoadingState(state.loading[authType.updateAvatar])
+  const loadingUpdateAvatar = useSelector(
+    (state: any) => state.loading[authType.updateAvatar]
   );
   const { onChangeTab, tab } = props;
   const [openCrop, setOpenCrop] = useState<boolean>(false);
@@ -40,7 +39,7 @@ const MeView = (props: PropTypes) => {
   }, []);
 
   useEffect(() => {
-    if (!loadingUpdateAvatar) {
+    if (loadingUpdateAvatar === false) {
       setImageChanged(null);
     }
   }, [loadingUpdateAvatar]);
@@ -84,7 +83,7 @@ const MeView = (props: PropTypes) => {
     <>
       <div className="me-form-view">
         <div className="me-avatar">
-          <img alt="" src={imageChanged || avatar || defaultAvatar} />
+          <ImageWithDefault src={imageChanged || avatar} />
           <label htmlFor="file-avatar" className="me-avatar-change">
             <span>Đổi Avatar</span>
             <FiCamera className="me-avatar-change-icon" />

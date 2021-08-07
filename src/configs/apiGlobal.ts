@@ -3,9 +3,8 @@
 import axios from "axios";
 
 import * as localStorage from "@utils/localStorage";
-import store from '@store/store';
+import store from "@store/store";
 import * as actionApp from "@store/actions/appActions";
-
 
 const apiGlobal = axios.create({
   baseURL: `${process.env.REACT_APP_BASE_API_URL}/api`,
@@ -50,15 +49,18 @@ apiGlobal.interceptors.response.use(
         return apiGlobal(originalRequest);
       } catch (error) {
         localStorage.clear();
-        store.getState().app.history.push(`${process.env.REACT_APP_ROUTE_LOGOUT}`)
-        store.dispatch(actionApp.splashLoadingDone())
+        store
+          .getState()
+          .app.history.push(`${process.env.REACT_APP_ROUTE_LOGOUT}`);
+        store.dispatch(actionApp.splashLoadingDone());
       }
-    };
+    }
     if (error.response.status === 403) {
       localStorage.clear();
-      store.getState().app.history.push(`${process.env.REACT_APP_ROUTE_LOGOUT}`)
-      store.dispatch(actionApp.splashLoadingDone())
-
+      store
+        .getState()
+        .app.history.push(`${process.env.REACT_APP_ROUTE_LOGOUT}`);
+      store.dispatch(actionApp.splashLoadingDone());
     }
     return Promise.reject(error);
   }

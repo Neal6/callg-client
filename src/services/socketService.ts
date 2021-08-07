@@ -1,6 +1,6 @@
-import apiGlobal from "@configs/apiGlobal";
-import * as socketUrl from "@constants/apiUrl/socket";
+import store from "@store/store";
 
-export const socketConnect = (data: any) => {
-  return apiGlobal.post(socketUrl.socketConnect, data);
+export const requestFriend = (data: any) => {
+  const socket = store.getState().socketIo.socket;
+  socket.emit("request-friend", data);
 };

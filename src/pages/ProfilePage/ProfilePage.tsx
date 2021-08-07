@@ -10,9 +10,8 @@ import "./profilePage.scss";
 import * as userAction from "@store/actions/userActions";
 import * as userType from "@store/actionTypes/userType";
 import ButtonBasic from "@components/ButtonBasic/ButtonBasic";
-import { convertLoadingState } from "@utils/validate";
-import defaultAvatar from "@assets/images/others/defaultAvatar.png";
 import emptyUserImage from "@assets/images/svg/empty-online.svg";
+import ImageWithDefault from "@components/ImageWithDefault/ImageWithDefault";
 
 type paramTypes = {
   id: string;
@@ -23,8 +22,8 @@ const ProfilePage = () => {
   const history = useHistory();
   const { id } = useParams<paramTypes>();
   const meId = useSelector((state: any) => state.auth._id);
-  const getUserLoading = useSelector((state: any) =>
-    convertLoadingState(state.loading[userType.getUser])
+  const getUserLoading = useSelector(
+    (state: any) => state.loading[userType.getUser]
   );
   const { avatar, fullName, introduce, _id } = useSelector(
     (state: any) => state.user.profile
@@ -53,7 +52,7 @@ const ProfilePage = () => {
         </div>
       ) : (
         <>
-          {getUserLoading ? (
+          {getUserLoading === true ? (
             <>
               {/* <Skeleton height={150} style={{ marginBottom: 24 }} />
             <Skeleton height={30} />
@@ -70,9 +69,8 @@ const ProfilePage = () => {
               <div className="profile-header">
                 <div className="profile-info">
                   <div className="profile-avatar">
-                    <img
-                      src={avatar || defaultAvatar}
-                      alt=""
+                    <ImageWithDefault
+                      src={avatar}
                       className="profile-avatar-image"
                     />
                   </div>

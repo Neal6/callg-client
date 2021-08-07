@@ -7,7 +7,7 @@
 
 body {
   margin: 0;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Roboto Slab", serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 16px;
@@ -43,7 +43,7 @@ body.dark {
 }
 
 .ant-message-success {
-  font-weight: 600;
+  font-weight: 400;
   color: #8c8c8c;
 }
 
@@ -52,7 +52,11 @@ body.dark {
 }
 
 .ant-tooltip {
-  font-weight: 600;
+  font-weight: 400;
+}
+
+.ant-tooltip-arrow-content {
+  background-color: #fff;
 }
 
 .ant-tooltip-inner {
@@ -60,5 +64,30 @@ body.dark {
   min-height: fit-content;
   padding: 8px;
   border-radius: 5px;
-  background-color: #000;
+  background-color: #fff;
+  color: #000;
+}
+
+.Toastify__toast-container {
+  width: 330px !important;
+}
+
+.Toastify__close-button {
+  box-sizing: content-box;
+  transform: translateY(8px);
+  background-color: #a2a2a2d4 !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  padding: unset;
+  &:hover {
+    opacity: 1 !important;
+  }
+  svg {
+    margin-left: 1px;
+    color: #000;
+  }
 }

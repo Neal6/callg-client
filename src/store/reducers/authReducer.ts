@@ -1,6 +1,7 @@
 import { AnyAction } from "redux";
 
 import * as authType from "@store/actionTypes/authType";
+import * as userType from "@store/actionTypes/userType";
 
 type authTypes = {
   isLogin: boolean;
@@ -91,6 +92,8 @@ const authReducer = (state = initState, action: AnyAction) => {
         ...action.payload,
       };
     }
+    case userType.requestFriendSuccess:
+      return { ...state, ...action.payload };
     default:
       return state;
   }

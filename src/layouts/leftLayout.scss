@@ -9,7 +9,7 @@
     width: fit-content;
     height: 100vh;
     position: relative;
-    background-color: #14243c;
+    background-color: #e3e5e8;
     .left-layout-function-item {
       position: relative;
       border-radius: 50%;
@@ -23,7 +23,7 @@
       transition: 100ms;
       background-color: #fff;
       .left-layout-function-item-icon {
-        color: #7a86ff;
+        color: #000;
         font-size: 20px;
       }
 
@@ -188,7 +188,7 @@
     &__history {
       font-size: 14px;
       color: #1c86e8;
-      font-weight: 600;
+      font-weight: 400;
       cursor: pointer;
     }
 
@@ -220,7 +220,7 @@
     align-items: center;
     cursor: pointer;
     color: #6a7480;
-    font-weight: 600;
+    font-weight: 400;
     &--active {
       background-color: rgba(116, 127, 141, 0.24) !important;
       color: #000;
@@ -250,8 +250,7 @@
     color: #6a7480;
     .left-layout-chat-friend-title {
       font-size: 14px;
-      text-transform: uppercase;
-      font-weight: 600;
+      font-weight: 400;
     }
     .left-layout-chat-friend-setting {
       font-size: 18px;
@@ -284,7 +283,7 @@
         }
       }
       .left-layout-chat-friend-list-item-name {
-        font-weight: 600;
+        font-weight: 400;
         font-size: 13px;
         color: #000;
       }
@@ -313,8 +312,7 @@
     color: #6a7480;
     .left-layout-chat-group-title {
       font-size: 14px;
-      text-transform: uppercase;
-      font-weight: 600;
+      font-weight: 400;
     }
     .left-layout-chat-group-setting {
       font-size: 18px;

@@ -2,11 +2,15 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import moment from "moment";
+import "moment/locale/vi";
 
 import RootRouter from "@routes/RootRouter";
 import SplashPage from "@pages/SplashPage/SplashPage";
 import PromptModal from "@components/PromptModal/PromptModal";
 import DetectNetwork from "@components/DetectNetwork/DetectNetwork";
+
+moment.locale("vi");
 
 const App = () => {
   const splashLoading = useSelector((state: any) => state.app.splashLoading);

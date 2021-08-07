@@ -12,7 +12,6 @@ import * as authAction from "@store/actions/authActions";
 import * as appAction from "@store/actions/appActions";
 import * as authType from "@store/actionTypes/authType";
 import * as loadingAction from "@store/actions/loadingAction";
-import { convertLoadingState } from "@utils/validate";
 
 type formTypes = {
   firstName: string;
@@ -27,8 +26,8 @@ const MeEdit = () => {
   const { firstName, lastName, email, phone, introduce, _id } = useSelector(
     (state: any) => state.auth
   );
-  const loadingUpdateProfile = useSelector((state: any) =>
-    convertLoadingState(state.loading[authType.updateProfile])
+  const loadingUpdateProfile = useSelector(
+    (state: any) => state.loading[authType.updateProfile]
   );
   const {
     register,
@@ -63,7 +62,7 @@ const MeEdit = () => {
   }, [isDirty]);
 
   useEffect(() => {
-    if (!loadingUpdateProfile) {
+    if (loadingUpdateProfile === false) {
       reset({
         firstName,
         lastName,

@@ -5,7 +5,7 @@ import { Menu, Dropdown } from "antd";
 import { Link } from "react-router-dom";
 
 import "@components/UserAvatarHeader/userAvatarHeader.scss";
-import defaultAvatar from "@assets/images/others/defaultAvatar.png";
+import ImageWithDefault from "@components/ImageWithDefault/ImageWithDefault";
 
 const UserAvatarHeader = () => {
   const { avatar, fullName } = useSelector((state: any) => state.auth);
@@ -17,11 +17,7 @@ const UserAvatarHeader = () => {
           to={`${process.env.REACT_APP_ROUTE_ME}`}
           className="user-dropdown"
         >
-          <img
-            alt=""
-            src={avatar || defaultAvatar}
-            className="user-dropdown__avatar"
-          />
+          <ImageWithDefault src={avatar} className="user-dropdown__avatar" />
           <div>
             <span className="user-dropdown__name">{fullName}</span>
             <span className="user-dropdown__small-text">Thông tin cá nhân</span>
@@ -49,7 +45,7 @@ const UserAvatarHeader = () => {
   return (
     <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
       <div className="user-avatar-header">
-        <img alt="" src={avatar || defaultAvatar} className="avatar" />
+        <ImageWithDefault src={avatar} className="avatar" />
         <FaAngleDown style={{ marginTop: 4, marginLeft: 4 }} />
       </div>
     </Dropdown>

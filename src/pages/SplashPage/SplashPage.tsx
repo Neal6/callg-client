@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { io } from "socket.io-client";
 
 import "@pages/SplashPage/splashPage.scss";
@@ -8,9 +8,11 @@ import * as actionApp from "@store/actions/appActions";
 import * as actionAuth from "@store/actions/authActions";
 import * as localStorage from "@utils/localStorage";
 import * as socketAction from "@store/actions/socketAction";
+import friendSocketListener from "@socket/friend";
 
 const SplashPage = () => {
   const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
   const redirectAuthUrl = useSelector(
     (state: any) => state.app.redirectAuthUrl
@@ -27,7 +29,9 @@ const SplashPage = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(actionApp.redirectAuthUrl(window.location.pathname));
+    dispatch(
+      actionApp.redirectAuthUrl(`${location.pathname}${location.search}`)
+    );
     dispatch(actionApp.initHistoryRouter(history));
 
     const access_token = localStorage.getItem("access_token");
@@ -42,28 +46,30 @@ const SplashPage = () => {
 
   useEffect(() => {
     if (isLogin) {
-      dispatch(actionApp.splashLoadingDone());
       if (/\/login|\/register/gi.test(redirectAuthUrl)) {
         history.push(`${process.env.REACT_APP_ROUTE_HOME}`);
       } else {
         history.push(redirectAuthUrl);
       }
-
-      const socket = io(`${process.env.REACT_APP_SOCKET_URL}`, {
-        withCredentials: true,
-      });
-      socket.on("connect", () => {
-        dispatch(
-          socketAction.socketConnect({
-            socket,
-            socketId: socket.id,
-            userId,
-          })
-        );
-      });
+      initApp();
     }
     // eslint-disable-next-line
   }, [isLogin]);
+
+  const initApp = async () => {
+    const socket = io(`${process.env.REACT_APP_SOCKET_URL}`, {
+      withCredentials: true,
+    });
+    await new Promise((resolve) => {
+      socket.on("connect", () => {
+        dispatch(socketAction.socketConnect(socket));
+        socket.emit("connect-login", { userId });
+        resolve(null);
+      });
+    });
+    friendSocketListener(socket, dispatch, useSelector);
+    dispatch(actionApp.splashLoadingDone());
+  };
 
   return <>{splashLoading && <div className="splash-page"></div>}</>;
 };
