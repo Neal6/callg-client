@@ -17,15 +17,17 @@
 }
 
 .user-avatar-header-menu {
-  margin-top: 12px;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  border-radius: 6px;
-  padding: 4px 6px;
-
+  padding: 8px;
   .user-dropdown {
     display: flex;
     align-items: center;
-
+    padding: 8px;
+    border-radius: 6px;
+    color: #000;
+    margin-bottom: 12px;
+    &:hover {
+      background-color: #0000000a;
+    }
     &__avatar {
       width: 42px;
       height: 42px;
@@ -47,18 +49,26 @@
     }
   }
 
-  .ant-dropdown-menu-item {
+  .user-avatar-header-menu-item {
     font-weight: 400;
-    padding-top: 8px;
+    padding: 8px;
     padding-bottom: 8px;
+    border-radius: 6px;
+    color: #000;
+    &:hover {
+      background-color: #0000000a;
+    }
   }
 
   .item-disabled {
     color: #6f6f6f;
     cursor: default;
+    padding-left: 8px;
   }
 
-  .ant-dropdown-menu-item:hover {
-    border-radius: 6px;
+  .user-avatar-header-menu-divider {
+    height: 1px;
+    margin: 8px 8px;
+    background-color: #0000001a;
   }
 }

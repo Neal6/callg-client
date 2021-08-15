@@ -53,16 +53,51 @@ export const logout = () => {
   };
 };
 
-export const updateProfile = (payload:any) => {
+export const updateProfile = (payload: any) => {
   return {
     type: actions.updateProfile,
-    payload
+    payload,
   };
 };
 
-export const updateAvatar = (payload:any) => {
+export const updateAvatar = (payload: any) => {
   return {
     type: actions.updateAvatar,
-    payload
+    payload,
+  };
+};
+
+export const receiveRequestFriend = (payload: any) => {
+  return {
+    type: actions.receiveRequestFriend,
+    payload,
+  };
+};
+
+export const rejectRequestFriend = (payload: any) => {
+  return {
+    type: actions.rejectRequestFriend,
+    payload,
+  };
+};
+
+export const cancelRequestFriend = (payload: any) => {
+  return {
+    type: actions.cancelRequestFriend,
+    payload,
+  };
+};
+
+export const acceptFriend = (payload: any) => {
+  return {
+    type: actions.acceptFriend,
+    payload,
+  };
+};
+
+export const unFriend = (payload: any) => {
+  return {
+    type: actions.unFriend,
+    payload,
   };
 };

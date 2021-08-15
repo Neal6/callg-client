@@ -6,15 +6,20 @@ import { customRouteProps } from "../types/route";
 
 const PrivateRoute = (props: customRouteProps) => {
   const isLogin = useSelector((state: any) => state.auth.isLogin);
-  const { component: Component, ...rest } = props;
+  const { component: Component, force, ...rest } = props;
 
   return (
     <>
       {isLogin ? (
         <Route
           {...rest}
-          render={(propsRoute) => {
-            return <Component {...propsRoute} />;
+          render={(propsRoute: any) => {
+            return (
+              <Component
+                {...propsRoute}
+                key={force ? Date.now() : propsRoute.key}
+              />
+            );
           }}
         />
       ) : (

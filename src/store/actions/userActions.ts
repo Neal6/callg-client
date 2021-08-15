@@ -26,9 +26,79 @@ export const searchUser = (payload: payloadType) => {
   };
 };
 
+export const getFriend = (payload: payloadType) => {
+  return {
+    type: actions.getFriend,
+    payload,
+  };
+};
+
+export const getFriendOnline = (payload: payloadType) => {
+  return {
+    type: actions.getFriendOnline,
+    payload,
+  };
+};
+
+export const getRequestFriend = (payload: payloadType) => {
+  return {
+    type: actions.getRequestFriend,
+    payload,
+  };
+};
+
+export const getReceiveRequestFriend = (payload: payloadType) => {
+  return {
+    type: actions.getReceiveRequestFriend,
+    payload,
+  };
+};
+
 export const requestFriend = (payload: payloadType) => {
   return {
     type: actions.requestFriend,
+    payload,
+  };
+};
+
+export const rejectFriend = (payload: payloadType) => {
+  return {
+    type: actions.rejectFriend,
+    payload,
+  };
+};
+
+export const cancelRequestFriend = (payload: payloadType) => {
+  return {
+    type: actions.cancelRequestFriend,
+    payload,
+  };
+};
+
+export const acceptFriend = (payload: payloadType) => {
+  return {
+    type: actions.acceptFriend,
+    payload,
+  };
+};
+
+export const unFriend = (payload: payloadType) => {
+  return {
+    type: actions.unFriend,
+    payload,
+  };
+};
+
+export const friendOnline = (payload: payloadType) => {
+  return {
+    type: actions.friendOnline,
+    payload,
+  };
+};
+
+export const friendOffline = (payload: payloadType) => {
+  return {
+    type: actions.friendOffline,
     payload,
   };
 };

@@ -1,6 +1,6 @@
 import React from "react";
 
-import "@layouts/header.scss";
+import "./header.scss";
 import UserAvatarHeader from "@components/UserAvatarHeader/UserAvatarHeader";
 import HeaderMenuApp from "@components/HeaderMenuApp/HeaderMenuApp";
 import HeaderNotification from "@components/HeaderNotification/HeaderNotification";

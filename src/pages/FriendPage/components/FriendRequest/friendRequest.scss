@@ -1,10 +1,21 @@
-.friend-request-empty {
-  width: 100%;
-  text-align: center;
-  padding-top: 100px;
-  .friend-request-empty-text {
-    color: #bdbdbd;
-    margin-top: 24px;
-    word-spacing: 2px;
+.wrap-friend-request {
+  margin-top: 16px;
+  .friend-request-list {
+    .friend-request-list-title {
+      margin-bottom: 16px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #888;
+    }
+  }
+  .friend-request-empty {
+    width: 100%;
+    text-align: center;
+    padding-top: 100px;
+    .friend-request-empty-text {
+      color: #bdbdbd;
+      margin-top: 24px;
+      word-spacing: 2px;
+    }
   }
 }

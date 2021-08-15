@@ -19,6 +19,7 @@ const RootRouter = () => {
       <PublicRoute
         path={`${process.env.REACT_APP_ROUTE_LOGIN}`}
         exact
+        force
         component={Login}
       />
 
@@ -47,6 +48,7 @@ const RootRouter = () => {
           <PrivateRoute
             path={`${process.env.REACT_APP_ROUTE_PROFILE}/:id`}
             exact
+            force
             component={ProfilePage}
           />
           <PrivateRoute

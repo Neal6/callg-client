@@ -55,6 +55,37 @@
       margin-top: 40px;
       display: flex;
       align-items: center;
+
+      .profile-header-friend-request {
+        margin: 0px 4px;
+        background-color: #fff;
+        border: 1px solid #1890ff !important;
+        color: #1890ff;
+        &:hover {
+          background-color: #1890ff;
+          color: #fff;
+        }
+      }
+      .profile-header-friend-accept {
+        margin: 0px 4px;
+        background-color: #fff;
+        border: 1px solid #52c41a !important;
+        color: #52c41a;
+        &:hover {
+          background-color: #52c41a;
+          color: #fff;
+        }
+      }
+      .profile-header-friend-dropdown {
+        margin: 0px 4px;
+        background-color: #fff;
+        border: 1px solid #52c41a !important;
+        color: #52c41a;
+        // &:hover {
+        //   background-color: #52c41a;
+        //   color: #fff;
+        // }
+      }
       .profile-header-setting {
         display: flex;
         align-items: center;
@@ -88,4 +119,36 @@
       }
     }
   }
+}
+
+.profile-header-friend-accept-cancel {
+  padding: 4px 6px;
+  color: #ff4d4f;
+  cursor: pointer;
+  font-weight: 500;
+  text-align: center;
+  &:hover {
+    background-color: #ff4d4f;
+    border-radius: 5px;
+    color: #fff;
+  }
+}
+
+.profile-header-friend-dropdown-menu {
+  min-width: 200px;
+}
+
+.profile-header-friend-dropdown-item {
+  padding: 6px 8px;
+  cursor: pointer;
+  text-align: left;
+  &:hover {
+    background-color: #88888824;
+    border-radius: 5px;
+  }
+}
+
+.profile-header-friend-dropdown-unfriend {
+  font-weight: 500;
+  color: #ff4d4f;
 }

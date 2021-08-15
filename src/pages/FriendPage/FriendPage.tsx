@@ -3,11 +3,12 @@ import { Link, useLocation } from "react-router-dom";
 
 import "./friendPage.scss";
 import PrivateRoute from "@routes/PrivateRoute";
-import FriendOnline from "./components/FriendOnline/FriendOnline";
-import FriendAll from "./components/FriendAll/FridndAll";
-import FriendRequest from "./components/FriendRequest/FriendRequest";
-import FriendBlock from "./components/FriendBlock/FriendBlock";
-import FriendAdd from "./components/FriendAdd/FriendAdd";
+import FriendOnline from "@pages/FriendPage/components/FriendOnline/FriendOnline";
+import FriendAll from "@pages/FriendPage/components/FriendAll/FridndAll";
+import FriendRequest from "@pages/FriendPage/components/FriendRequest/FriendRequest";
+import FriendBlock from "@pages/FriendPage/components/FriendBlock/FriendBlock";
+import FriendAdd from "@pages/FriendPage/components/FriendAdd/FriendAdd";
+import FriendReviceRequest from "@pages/FriendPage/components/FriendReceiveRequest/FriendReviceRequest";
 
 const FriendPage = () => {
   const location = useLocation();
@@ -53,6 +54,17 @@ const FriendPage = () => {
             Yêu cầu kết bạn
           </div>
         </Link>
+        <Link to={`${process.env.REACT_APP_ROUTE_FRIEND_RECEIVE}`}>
+          <div
+            className={`friend-page-header-item ${
+              activeMenu === process.env.REACT_APP_ROUTE_FRIEND_RECEIVE
+                ? "friend-page-header-item--active"
+                : ""
+            }`}
+          >
+            Lời mời kết bạn
+          </div>
+        </Link>
         <Link to={`${process.env.REACT_APP_ROUTE_FRIEND_BLOCK}`}>
           <div
             className={`friend-page-header-item ${
@@ -87,6 +99,11 @@ const FriendPage = () => {
           path={`${process.env.REACT_APP_ROUTE_FRIEND_REQUEST}`}
           exact
           component={FriendRequest}
+        />
+        <PrivateRoute
+          path={`${process.env.REACT_APP_ROUTE_FRIEND_RECEIVE}`}
+          exact
+          component={FriendReviceRequest}
         />
         <PrivateRoute
           path={`${process.env.REACT_APP_ROUTE_FRIEND_BLOCK}`}

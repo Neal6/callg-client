@@ -1,10 +1,21 @@
-.friend-all-empty {
-  width: 100%;
-  text-align: center;
-  padding-top: 100px;
-  .friend-all-empty-text {
-    color: #bdbdbd;
-    margin-top: 24px;
-    word-spacing: 2px;
+.wrap-friend-all {
+  margin-top: 16px;
+  .friend-all-list {
+    .friend-all-list-title {
+      margin-bottom: 16px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #888;
+    }
+  }
+  .friend-all-empty {
+    width: 100%;
+    text-align: center;
+    padding-top: 100px;
+    .friend-all-empty-text {
+      color: #bdbdbd;
+      margin-top: 24px;
+      word-spacing: 2px;
+    }
   }
 }

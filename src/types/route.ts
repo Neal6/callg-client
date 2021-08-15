@@ -3,4 +3,5 @@ export interface customRouteProps {
   path: string;
   exact?: boolean;
   layout?: any;
+  force?: boolean;
 }

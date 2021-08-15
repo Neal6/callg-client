@@ -1,0 +1,21 @@
+.friend-receive-request-wrap {
+  margin-top: 16px;
+  .friend-receive-request-list {
+    .friend-receive-request-list-title {
+      margin-bottom: 16px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #888;
+    }
+  }
+  .friend-receive-request-empty {
+    width: 100%;
+    text-align: center;
+    padding-top: 100px;
+    .friend-receive-request-empty-text {
+      color: #bdbdbd;
+      margin-top: 24px;
+      word-spacing: 2px;
+    }
+  }
+}

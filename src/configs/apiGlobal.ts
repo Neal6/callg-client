@@ -34,24 +34,32 @@ apiGlobal.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const refreshRes = await apiGlobal.post(`/auth/refreshToken`, {
-          refresh_token: localStorage.getItem("refresh_token"),
+        const refreshRes = await axios({
+          baseURL: `${process.env.REACT_APP_BASE_API_URL}/api`,
+          timeout: 30000,
+          headers: { "Content-Type": "application/json" },
+          method: "post",
+          url: "/auth/refreshToken",
+          data: {
+            refresh_token: localStorage.getItem("refresh_token"),
+          },
         });
 
         if (refreshRes) {
-          localStorage.setItem("access_token", refreshRes.access_token);
-          localStorage.setItem("refresh_token", refreshRes.refresh_token);
+          localStorage.setItem("access_token", refreshRes.data.access_token);
+          localStorage.setItem("refresh_token", refreshRes.data.refresh_token);
         }
         originalRequest.headers[
           "Authorization"
-        ] = `Bearer ${refreshRes.access_token}`;
+        ] = `Bearer ${refreshRes.data.access_token}`;
 
         return apiGlobal(originalRequest);
       } catch (error) {
+        console.log(error);
         localStorage.clear();
         store
           .getState()
-          .app.history.push(`${process.env.REACT_APP_ROUTE_LOGOUT}`);
+          .app.history.replace(`${process.env.REACT_APP_ROUTE_LOGOUT}`);
         store.dispatch(actionApp.splashLoadingDone());
       }
     }
@@ -59,7 +67,7 @@ apiGlobal.interceptors.response.use(
       localStorage.clear();
       store
         .getState()
-        .app.history.push(`${process.env.REACT_APP_ROUTE_LOGOUT}`);
+        .app.history.replace(`${process.env.REACT_APP_ROUTE_LOGOUT}`);
       store.dispatch(actionApp.splashLoadingDone());
     }
     return Promise.reject(error);

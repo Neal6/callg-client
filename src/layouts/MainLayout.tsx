@@ -3,8 +3,8 @@
 import React from "react";
 
 import "@layouts/mainLayout.scss";
-import Header from "@layouts/Header";
-import LeftLayout from "@layouts/LeftLayout";
+import Header from "@layouts/Header/Header";
+import LeftLayout from "@layouts/LeftLayout/LeftLayout";
 
 const MainLayout = ({ children }: any) => {
   return (

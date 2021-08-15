@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import Skeleton from "react-loading-skeleton";
-import { Tooltip, message } from "antd";
+import { Tooltip, message, Dropdown } from "antd";
 import copy from "copy-to-clipboard";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
@@ -12,6 +11,7 @@ import * as userType from "@store/actionTypes/userType";
 import ButtonBasic from "@components/ButtonBasic/ButtonBasic";
 import emptyUserImage from "@assets/images/svg/empty-online.svg";
 import ImageWithDefault from "@components/ImageWithDefault/ImageWithDefault";
+import DropdownMenu from "@components/DropdownMenu/DropdownMenu";
 
 type paramTypes = {
   id: string;
@@ -21,7 +21,12 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams<paramTypes>();
-  const meId = useSelector((state: any) => state.auth._id);
+  const {
+    _id: meId,
+    friends,
+    requestFriend,
+    receiveRequestFriend,
+  } = useSelector((state: any) => state.auth);
   const getUserLoading = useSelector(
     (state: any) => state.loading[userType.getUser]
   );
@@ -41,7 +46,74 @@ const ProfilePage = () => {
     return () => {
       dispatch(userAction.cleanUser());
     };
-  }, [id]);
+  }, []);
+
+  const onRequestFriend = () => {
+    dispatch(userAction.requestFriend({ body: { user: id } }));
+  };
+
+  const onRejectRequest = () => {
+    dispatch(userAction.rejectFriend({ body: { user: id } }));
+  };
+
+  const onCancelRequest = () => {
+    dispatch(userAction.cancelRequestFriend({ body: { user: id } }));
+  };
+
+  const onAcceptFriend = () => {
+    dispatch(userAction.acceptFriend({ body: { user: id, avatar, fullName } }));
+  };
+
+  const onUnfriend = () => {
+    dispatch(userAction.unFriend({ body: { user: id, avatar, fullName } }));
+  };
+
+  const menuConfirm = (
+    <DropdownMenu arrow>
+      <div
+        className="profile-header-friend-accept-cancel"
+        onClick={onRejectRequest}
+      >
+        Hủy lời mời
+      </div>
+    </DropdownMenu>
+  );
+
+  const menuAccept = (
+    <DropdownMenu arrow>
+      <div
+        className="profile-header-friend-accept-cancel"
+        onClick={onCancelRequest}
+      >
+        Hủy lời mời
+      </div>
+    </DropdownMenu>
+  );
+
+  const menuFriend = (
+    <DropdownMenu arrow>
+      <div className="profile-header-friend-dropdown-menu">
+        <div
+          className="profile-header-friend-dropdown-item "
+          onClick={() => {}}
+        >
+          Yêu thích
+        </div>
+        <div
+          className="profile-header-friend-dropdown-item "
+          onClick={() => {}}
+        >
+          Ẩn thông tin
+        </div>
+        <div
+          className="profile-header-friend-dropdown-item profile-header-friend-dropdown-unfriend"
+          onClick={onUnfriend}
+        >
+          Hủy bạn bè
+        </div>
+      </div>
+    </DropdownMenu>
+  );
 
   return (
     <div className="wrap-profile">
@@ -90,7 +162,54 @@ const ProfilePage = () => {
                   </div>
                 </div>
                 <div className="profile-header-menu">
-                  <ButtonBasic>Yêu cầu kết bạn</ButtonBasic>
+                  {!requestFriend.includes(_id) && !friends.includes(_id) && (
+                    <ButtonBasic
+                      className="profile-header-friend-request"
+                      onClick={onRequestFriend}
+                    >
+                      Yêu cầu kết bạn
+                    </ButtonBasic>
+                  )}
+                  {requestFriend.includes(_id) && !friends.includes(_id) && (
+                    <Dropdown
+                      overlay={menuAccept}
+                      placement="bottomCenter"
+                      arrow
+                    >
+                      <ButtonBasic
+                        className="profile-header-friend-request"
+                        onClick={onRequestFriend}
+                      >
+                        Chờ đồng ý
+                      </ButtonBasic>
+                    </Dropdown>
+                  )}
+                  {receiveRequestFriend.includes(_id) && (
+                    <Dropdown
+                      overlay={menuConfirm}
+                      placement="bottomCenter"
+                      arrow
+                    >
+                      <ButtonBasic
+                        className="profile-header-friend-accept"
+                        onClick={onAcceptFriend}
+                      >
+                        Đồng ý kết bạn
+                      </ButtonBasic>
+                    </Dropdown>
+                  )}
+                  {friends.includes(_id) && (
+                    <Dropdown
+                      overlay={menuFriend}
+                      trigger={["click"]}
+                      placement="bottomRight"
+                      arrow
+                    >
+                      <ButtonBasic className="profile-header-friend-dropdown">
+                        Bạn bè
+                      </ButtonBasic>
+                    </Dropdown>
+                  )}
                   <div className="profile-header-setting">
                     <BsThreeDotsVertical className="profile-header-setting-icon" />
                   </div>

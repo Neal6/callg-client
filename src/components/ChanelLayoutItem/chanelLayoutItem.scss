@@ -1,0 +1,44 @@
+.chanel-layout-item {
+  margin: 4px 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 5px;
+  &--active {
+    background-color: #b3c7ff33 !important;
+  }
+  &:hover {
+    background-color: #b3c7ff1a;
+  }
+  .chanel-layout-item-avatar {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+    position: relative;
+    img {
+      width: 32px;
+      height: 32px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .chanel-layout-item-dot-status {
+      position: absolute;
+      right: -4px;
+      bottom: -4px;
+    }
+  }
+  .chanel-layout-item-name {
+    font-weight: 400;
+    font-size: 13px;
+    color: #000;
+  }
+  .chanel-layout-item-last-message {
+    font-size: 12px;
+    color: #888;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

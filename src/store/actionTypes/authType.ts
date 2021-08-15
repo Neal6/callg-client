@@ -31,4 +31,14 @@ export const updateAvatar = "UPDATE_AVATAR";
 export const updateAvatarStart = "UPDATE_AVATAR_START";
 export const updateAvatarSuccess = "UPDATE_AVATAR_SUCCESS";
 
+export const receiveRequestFriend = "RECEIVE_REQUEST_FRIEND";
+
+export const rejectRequestFriend = "REJECT_REQUEST_FRIEND";
+
+export const cancelRequestFriend = "@AUTH/CANCEL_REQUEST_FRIEND";
+
+export const acceptFriend = "@AUTH/ACCEPT_FRIEND";
+
+export const unFriend = "@AUTH/UN_FRIEND";
+
 export const logout = "LOGOUT";

@@ -1,0 +1,199 @@
+.chanel-layout {
+  width: 258px;
+  background-color: #f2f3f5;
+  padding-top: 70px;
+  position: relative;
+  z-index: 5;
+  .chanel-layout-skeleton {
+    padding: 16px;
+    .chanel-layout-skeleton-item {
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+    }
+  }
+  .chanel-layout-search {
+    position: absolute;
+    top: 0;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    z-index: 3;
+    border-radius: 5px;
+    align-self: baseline;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 20px,
+      rgba(51, 51, 51, 0.03) 0px 0px 2px 1px;
+
+    &--active {
+      border-radius: 0px;
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+      top: 0;
+      left: 0;
+      right: -100px;
+      padding-top: 16px;
+      background-color: #fff;
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -16px;
+        left: -0;
+        right: -0;
+        height: 1px;
+        background-color: #d6d5d5;
+        display: none;
+      }
+    }
+
+    .search-input {
+      outline: none;
+      border: none;
+      width: 100%;
+      padding: 12px;
+      padding-left: 20px;
+      padding-right: 46px;
+      border-radius: 25px;
+      transition: all 300ms;
+
+      &::placeholder {
+        color: #aaa;
+        opacity: 1;
+      }
+
+      &--active {
+        border-radius: 0px;
+        background-color: #f0f2f5;
+      }
+    }
+
+    .search-icon {
+      cursor: pointer;
+      position: absolute;
+      right: 8px;
+      top: 5px;
+      background-color: #b3c7ff29;
+      border-radius: 50%;
+      padding: 4px;
+      font-size: 28px;
+      color: #042b5d;
+
+      &--active {
+        top: 21px;
+        background-color: transparent;
+      }
+    }
+
+    .header-search-result {
+      padding: 16px 12px;
+
+      &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      &__title {
+        font-size: 15px;
+        font-weight: 700;
+        color: #050505;
+      }
+
+      &__history {
+        font-size: 14px;
+        color: #1c86e8;
+        font-weight: 400;
+        cursor: pointer;
+      }
+
+      .header-search-empty {
+        text-align: center;
+        color: #a9a9a9;
+
+        &__icon {
+          font-size: 30px;
+        }
+
+        &__text {
+          color: #a9a9a9;
+        }
+      }
+    }
+  }
+
+  .chanel-layout-menu {
+    width: 100%;
+    margin-top: 8px;
+    position: relative;
+
+    .chanel-layout-menu-item {
+      display: flex;
+      margin: 4px 8px;
+      padding: 12px;
+      border-radius: 5px;
+      align-items: center;
+      cursor: pointer;
+      color: #6a7480;
+      font-weight: 400;
+      &--active {
+        background-color: rgba(116, 127, 141, 0.24) !important;
+        color: #000;
+      }
+      &:hover {
+        background-color: rgba(116, 127, 141, 0.08);
+        color: #000;
+      }
+      .chanel-layout-menu-item-icon {
+        font-size: 24px;
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .chanel-layout-friend {
+    width: 100%;
+    margin-top: 8px;
+    position: relative;
+    .chanel-layout-friend-header {
+      margin: 8px;
+      display: flex;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 3px;
+      justify-content: space-between;
+      color: #6a7480;
+      .chanel-layout-friend-title {
+        font-size: 14px;
+        font-weight: 400;
+      }
+      .chanel-layout-friend-setting {
+        font-size: 18px;
+        cursor: pointer;
+      }
+    }
+    .chanel-layout-friend-list {
+    }
+  }
+  .chanel-layout-group {
+    width: 100%;
+    margin-top: 8px;
+    position: relative;
+    .chanel-layout-group-header {
+      margin: 8px;
+      display: flex;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 3px;
+      justify-content: space-between;
+      color: #6a7480;
+      .chanel-layout-group-title {
+        font-size: 14px;
+        font-weight: 400;
+      }
+      .chanel-layout-group-setting {
+        font-size: 18px;
+        cursor: pointer;
+      }
+    }
+  }
+}

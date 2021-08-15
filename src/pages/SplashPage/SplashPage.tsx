@@ -6,9 +6,11 @@ import { io } from "socket.io-client";
 import "@pages/SplashPage/splashPage.scss";
 import * as actionApp from "@store/actions/appActions";
 import * as actionAuth from "@store/actions/authActions";
+import * as chanelAction from "@store/actions/chanelAction";
 import * as localStorage from "@utils/localStorage";
 import * as socketAction from "@store/actions/socketAction";
-import friendSocketListener from "@socket/friend";
+import friendSocketListener from "src/socket/friend";
+import chanelSocketListener from "src/socket/chanel";
 
 const SplashPage = () => {
   const history = useHistory();
@@ -19,6 +21,7 @@ const SplashPage = () => {
   );
   const isLogin = useSelector((state: any) => state.auth.isLogin);
   const userId = useSelector((state: any) => state.auth._id);
+  const chanels = useSelector((state: any) => state.auth.chanels);
   const splashLoading = useSelector((state: any) => state.app.splashLoading);
   const [showSplash, setShowSplash] = useState<boolean>(true);
 
@@ -46,11 +49,6 @@ const SplashPage = () => {
 
   useEffect(() => {
     if (isLogin) {
-      if (/\/login|\/register/gi.test(redirectAuthUrl)) {
-        history.push(`${process.env.REACT_APP_ROUTE_HOME}`);
-      } else {
-        history.push(redirectAuthUrl);
-      }
       initApp();
     }
     // eslint-disable-next-line
@@ -63,12 +61,19 @@ const SplashPage = () => {
     await new Promise((resolve) => {
       socket.on("connect", () => {
         dispatch(socketAction.socketConnect(socket));
-        socket.emit("connect-login", { userId });
+        socket.emit("connect-login", { userId, chanels: chanels || [] });
         resolve(null);
       });
     });
     friendSocketListener(socket, dispatch, useSelector);
+    chanelSocketListener(socket, dispatch, useSelector);
     dispatch(actionApp.splashLoadingDone());
+    dispatch(chanelAction.getChanelRevent({ body: { page: 1, pageSize: 50 } }));
+    if (/\/login|\/register/gi.test(redirectAuthUrl)) {
+      history.replace(`${process.env.REACT_APP_ROUTE_HOME}`);
+    } else {
+      history.replace(redirectAuthUrl);
+    }
   };
 
   return <>{splashLoading && <div className="splash-page"></div>}</>;

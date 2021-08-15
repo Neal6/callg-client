@@ -46,7 +46,7 @@ class PopupWindow {
   open() {
     const { url, id, options } = this;
 
-    this.window = window.open(url, id, toQuery(options, ","));
+    this.window = window.open(url, "_blank", toQuery(options, ","));
   }
 
   close() {
@@ -62,7 +62,6 @@ class PopupWindow {
 
           if (!popup || popup.closed !== false) {
             this.close();
-
 
             return;
           }

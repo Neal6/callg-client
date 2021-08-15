@@ -349,7 +349,7 @@ module.exports = function (webpackEnv) {
         "@store": path.resolve(__dirname, "../src/store/"),
         "@types": path.resolve(__dirname, "../src/types/"),
         "@utils": path.resolve(__dirname, "../src/utils/"),
-        "@socket": path.resolve(__dirname, "../src/webSocket/"),
+        "@socket": path.resolve(__dirname, "../src/socket/"),
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding

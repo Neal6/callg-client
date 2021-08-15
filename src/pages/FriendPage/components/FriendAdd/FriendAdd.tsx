@@ -6,7 +6,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import "./friendAdd.scss";
 import ButtonSubmit from "@components/ButtonSubmit/ButtonSubmit";
 import * as userAction from "@store/actions/userActions";
-import FriendAddList from "../FriendAddList/FriendAddList";
+import FriendAddList from "./FriendAddList/FriendAddList";
 import { formatQuery, decodeQuery } from "@utils/string";
 
 type formTypes = {

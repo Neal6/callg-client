@@ -31,7 +31,7 @@
       "@store/*": ["src/store/*"],
       "@types/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"],
-      "@socket/*": ["src/webSocket/*"]
+      "@socket/*": ["src/socket/*"]
     }
   },
   "include": ["src"],

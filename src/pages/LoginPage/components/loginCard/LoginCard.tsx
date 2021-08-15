@@ -67,7 +67,6 @@ const LoginCard = () => {
         prompt: "select_account",
         ux_mode: "popup",
       });
-      console.log(googleUser);
       if (googleUser) {
         const basicUser = jwt_decode(googleUser.getAuthResponse().id_token);
         dispatch(

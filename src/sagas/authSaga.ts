@@ -38,6 +38,7 @@ function* loginWithToken(action: any) {
 
 function* register(action: any) {
   yield put({ type: actionAuthType.registerStart });
+
   try {
     const registerRes = yield authService.register(action.payload.data);
     yield put({
@@ -55,10 +56,12 @@ function* register(action: any) {
 }
 
 function* loginWithGoogle(action: any) {
+  yield put({ type: actionAuthType.loginStart });
+
   try {
     const loginRes = yield authService.loginWithGoogle(action.payload);
     yield put({
-      type: actionAuthType.loginWithGoogleSuccess,
+      type: actionAuthType.loginSuccess,
       payload: loginRes.user,
     });
     localStorage.setItem("access_token", loginRes.user.access_token);
@@ -67,10 +70,12 @@ function* loginWithGoogle(action: any) {
 }
 
 function* loginWithMicrosoft(action: any) {
+  yield put({ type: actionAuthType.loginStart });
+
   try {
     const loginRes = yield authService.loginWithMicrosoft(action.payload);
     yield put({
-      type: actionAuthType.loginWithMicrosoftSuccess,
+      type: actionAuthType.loginSuccess,
       payload: loginRes.user,
     });
     localStorage.setItem("access_token", loginRes.user.access_token);
@@ -79,10 +84,12 @@ function* loginWithMicrosoft(action: any) {
 }
 
 function* loginWithGithub(action: any) {
+  yield put({ type: actionAuthType.loginStart });
+
   try {
     const loginRes = yield authService.loginWithGithub(action.payload);
     yield put({
-      type: actionAuthType.loginWithGithubSuccess,
+      type: actionAuthType.loginSuccess,
       payload: loginRes.user,
     });
     localStorage.setItem("access_token", loginRes.user.access_token);
@@ -91,6 +98,8 @@ function* loginWithGithub(action: any) {
 }
 
 function* loginWithFacebook(action: any) {
+  yield put({ type: actionAuthType.loginStart });
+
   try {
     const loginRes = yield authService.loginWithFacebook(action.payload);
     yield put({
@@ -104,8 +113,8 @@ function* loginWithFacebook(action: any) {
 
 function* updateProfile(action: any) {
   yield put({
-    type:actionAuthType.updateProfileStart
-  })
+    type: actionAuthType.updateProfileStart,
+  });
   try {
     const res = yield userService.updateUser(action.payload);
     toast("Cập nhật thông tin thành công");
@@ -113,14 +122,12 @@ function* updateProfile(action: any) {
       type: actionAuthType.updateProfileSuccess,
       payload: res.data,
     });
-  } catch (error) {
-
-  }
+  } catch (error) {}
 }
 function* updateAvatar(action: any) {
   yield put({
-    type:actionAuthType.updateAvatarStart
-  })
+    type: actionAuthType.updateAvatarStart,
+  });
   try {
     const res = yield userService.updateAvatarUser(action.payload);
     toast("Cập nhật avatar thành công");
@@ -128,9 +135,7 @@ function* updateAvatar(action: any) {
       type: actionAuthType.updateAvatarSuccess,
       payload: res.data,
     });
-  } catch (error) {
-
-  }
+  } catch (error) {}
 }
 
 function* authSaga() {

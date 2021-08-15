@@ -5,7 +5,7 @@ import Skeleton from "react-loading-skeleton";
 import "./friendAddList.scss";
 import * as userType from "@store/actionTypes/userType";
 import * as userAction from "@store/actions/userActions";
-import FriendAddItem from "../FriendAddItem/FriendAddItem";
+import FriendItem from "@components/FriendItem/FriendItem";
 import emptyAddImage from "@assets/images/svg/empty-add.svg";
 
 const FriendAddList = () => {
@@ -33,7 +33,7 @@ const FriendAddList = () => {
             <div className="friend-add-list-title">Kết quả tìm kiếm</div>
           )}
           {users.map((user: any) => (
-            <FriendAddItem key={user.id} user={user} />
+            <FriendItem key={user.id} user={user} />
           ))}
           {users.length === 0 && loadingSearchUser === false && (
             <>

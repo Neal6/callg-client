@@ -219,7 +219,7 @@ const RegisterCard = () => {
           <TextErrorValidate>Mật khẩu không được để trống</TextErrorValidate>
         )}
         <ButtonSubmit
-          style={{ width: "100%", marginTop: "1rem" }}
+          className="register-card__submit"
           disabled={loadingRegister}
         >
           {loadingRegister ? "Loading..." : "Đăng ký"}

@@ -24,7 +24,7 @@ const App = () => {
       <DetectNetwork />
       <ToastContainer
         position="bottom-left"
-        autoClose={2000}
+        autoClose={5000}
         hideProgressBar
         newestOnTop
         closeOnClick
