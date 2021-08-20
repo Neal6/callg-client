@@ -1,0 +1,66 @@
+.chanel-content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border: solid 2px transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 10px 10px #888;
+    border: solid 4px transparent;
+    border-radius: 100px;
+    &:hover {
+      box-shadow: inset 0 0 12px 12px rgb(214, 214, 214);
+      border: solid 4px transparent;
+    }
+  }
+
+  .chanel-content-not-found {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .chanel-content-skeleton-wrap {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    .chanel-content-skeleton {
+      max-width: 70%;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: flex-end;
+
+      &--left {
+        align-self: flex-start;
+      }
+      &--right {
+        align-self: flex-end;
+        display: flex;
+        flex-direction: row-reverse;
+      }
+      .chanel-content-skeleton-message {
+        margin: 0px 8px;
+      }
+      .chanel-content-skeleton-message-no-avatar {
+        margin: 0px 58px;
+      }
+    }
+  }
+
+  .chanel-content-message-wrap {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    opacity: 0;
+    &--active {
+      opacity: 1;
+    }
+  }
+}

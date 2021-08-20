@@ -81,70 +81,47 @@ const ChanelLayout = () => {
           Hoạt động quanh đây
         </div>
       </div>
-
-      <div className="chanel-layout-friend">
-        <div className="chanel-layout-friend-header">
-          <div className="chanel-layout-friend-title">Tin nhắn cá nhân</div>
-          <RiSettings5Fill className="chanel-layout-friend-setting" />
+      <div className="chanel-layout-recent">
+        <div className="chanel-layout-friend">
+          <div className="chanel-layout-friend-header">
+            <div className="chanel-layout-friend-title">Tin nhắn cá nhân</div>
+            <RiSettings5Fill className="chanel-layout-friend-setting" />
+          </div>
+          {loadingGetChanelRecent === true ? (
+            <div className="chanel-layout-skeleton">
+              <div className="chanel-layout-skeleton-item">
+                <Skeleton circle={true} height={40} width={40} />
+                <div style={{ flex: 1, marginLeft: 8 }}>
+                  <Skeleton height={40} />
+                </div>
+              </div>
+              <div className="chanel-layout-skeleton-item">
+                <Skeleton circle={true} height={40} width={40} />
+                <div style={{ flex: 1, marginLeft: 8 }}>
+                  <Skeleton height={40} />
+                </div>
+              </div>
+              <div className="chanel-layout-skeleton-item">
+                <Skeleton circle={true} height={40} width={40} />
+                <div style={{ flex: 1, marginLeft: 8 }}>
+                  <Skeleton height={40} />
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="chanel-layout-friend-list">
+              {chanelList.map((chanel: any) => (
+                <ChanelLayoutItem key={chanel.id} chanel={chanel} />
+              ))}
+            </div>
+          )}
         </div>
-        {loadingGetChanelRecent === true ? (
-          <div className="chanel-layout-skeleton">
-            <div className="chanel-layout-skeleton-item">
-              <Skeleton circle={true} height={40} width={40} />
-              <div style={{ flex: 1, marginLeft: 8 }}>
-                <Skeleton height={40} />
-              </div>
-            </div>
-            <div className="chanel-layout-skeleton-item">
-              <Skeleton circle={true} height={40} width={40} />
-              <div style={{ flex: 1, marginLeft: 8 }}>
-                <Skeleton height={40} />
-              </div>
-            </div>
-            <div className="chanel-layout-skeleton-item">
-              <Skeleton circle={true} height={40} width={40} />
-              <div style={{ flex: 1, marginLeft: 8 }}>
-                <Skeleton height={40} />
-              </div>
-            </div>
-            <div className="chanel-layout-skeleton-item">
-              <Skeleton circle={true} height={40} width={40} />
-              <div style={{ flex: 1, marginLeft: 8 }}>
-                <Skeleton height={40} />
-              </div>
-            </div>
-            <div className="chanel-layout-skeleton-item">
-              <Skeleton circle={true} height={40} width={40} />
-              <div style={{ flex: 1, marginLeft: 8 }}>
-                <Skeleton height={40} />
-              </div>
-            </div>
-            <div className="chanel-layout-skeleton-item">
-              <Skeleton circle={true} height={40} width={40} />
-              <div style={{ flex: 1, marginLeft: 8 }}>
-                <Skeleton height={40} />
-              </div>
-            </div>
-            <div className="chanel-layout-skeleton-item">
-              <Skeleton circle={true} height={40} width={40} />
-              <div style={{ flex: 1, marginLeft: 8 }}>
-                <Skeleton height={40} />
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="chanel-layout-friend-list">
-            {chanelList.map((chanel: any) => (
-              <ChanelLayoutItem key={chanel.id} chanel={chanel} />
-            ))}
-          </div>
-        )}
-      </div>
 
-      <div className="chanel-layout-group">
-        <div className="chanel-layout-group-header">
-          <div className="chanel-layout-group-title">Tin nhắn nhóm</div>
-          <RiSettings5Fill className="chanel-layout-group-setting" />
+        <div className="chanel-layout-group">
+          <div className="chanel-layout-group-header">
+            <div className="chanel-layout-group-title">Tin nhắn nhóm</div>
+            <RiSettings5Fill className="chanel-layout-group-setting" />
+          </div>
         </div>
       </div>
     </div>

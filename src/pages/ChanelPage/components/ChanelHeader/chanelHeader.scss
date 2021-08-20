@@ -1,0 +1,58 @@
+.chanel-header {
+  height: 50px;
+  padding: 0px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  .chanel-header-skeleton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    .chanel-header-skeleton-left {
+      display: flex;
+      align-items: center;
+    }
+    .chanel-header-skeleton-right {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .chanel-header-member {
+    display: flex;
+    align-items: center;
+    .chanel-header-member-info {
+      position: relative;
+      .chanel-header-member-info-avatar {
+        width: 36px;
+        height: 36px;
+        object-fit: contain;
+        border-radius: 50%;
+      }
+      .chanel-header-member-info-dot {
+        position: absolute;
+        right: -2px;
+        bottom: -2px;
+      }
+    }
+    .chanel-header-member-status {
+      margin-left: 12px;
+      font-size: 13px;
+      color: #888;
+    }
+  }
+
+  .chanel-header-menu {
+    display: flex;
+    align-items: center;
+    .chanel-header-menu-icon {
+      margin-left: 18px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #4f5660;
+    }
+  }
+}

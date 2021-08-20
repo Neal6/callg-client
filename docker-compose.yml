@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  app:
+  callg-client:
     build:
       context: .
       dockerfile: ./docker/Dockerfile.dev
@@ -9,19 +9,15 @@ services:
       - type: bind
         source: ./
         target: /app
-        read_only: true
-      - exclude:/app/node_modules/
     ports:
       - "8002:8002"
     environment:
       - CHOKIDAR_USEPOLLING=true
 
     networks:
-      - callg
+      - callg-client
+
 networks:
-  callg:
+  callg-client:
     driver: bridge
     name: callg
-
-volumes:
-  exclude:

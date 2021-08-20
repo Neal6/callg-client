@@ -1,5 +1,6 @@
 .me-page-wrap {
   display: flex;
+  margin: 16px;
   padding: 24px;
   background-color: #f2f3f5;
   width: fit-content;
@@ -12,6 +13,7 @@
     max-width: 765px;
     background-color: #fff;
     align-self: flex-start;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    box-shadow: 0.5rem 0.5rem 2rem 0 rgba(8, 15, 41, 0.08),
+      0px 0px 1px 0px rgba(8, 15, 41, 0.08);
   }
 }

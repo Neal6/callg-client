@@ -31,3 +31,10 @@ export const connectLogout = () => {
     socket.emit("connect-logout");
   }
 };
+
+export const sendMessage = (data: any) => {
+  const socket = store.getState().socketIo.socket;
+  if (socket) {
+    socket.emit("send-message", data);
+  }
+};

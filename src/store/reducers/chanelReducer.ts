@@ -4,10 +4,16 @@ import * as actions from "@store/actionTypes/chanelType";
 
 type appTypes = {
   chanelList: any;
+  currentChanel: any;
+  messages: any;
+  errorGetChanel: boolean;
 };
 
 const initState: appTypes = {
   chanelList: [],
+  currentChanel: {},
+  messages: [],
+  errorGetChanel: false,
 };
 
 const chanelReducer = (state = initState, action: AnyAction) => {
@@ -22,17 +28,76 @@ const chanelReducer = (state = initState, action: AnyAction) => {
         return state;
       }
     }
+
+    case actions.getChanelSuccess: {
+      return { ...state, currentChanel: action.payload, errorGetChanel: false };
+    }
+
+    case actions.getChanelFail: {
+      return { ...state, errorGetChanel: true };
+    }
+
+    case actions.getMessagesSuccess: {
+      return { ...state, messages: action.payload };
+    }
+
     case actions.getChanelRecentSuccess: {
       return {
         ...state,
         chanelList: action.payload,
       };
     }
+
+    case actions.sendMessage: {
+      return {
+        ...state,
+        messages: [
+          ...state.messages,
+          {
+            ...action.payload.body,
+            key: action.payload.key,
+            _id: new Date().getTime(),
+          },
+        ],
+      };
+    }
+
+    case actions.sendMessageSuccess: {
+      const messagePreview = state.messages.findIndex(
+        (mes: any) => mes.key === action.payload.key
+      );
+      const newMessages = state.messages;
+      newMessages.splice(messagePreview, 1, action.payload.message);
+      return {
+        ...state,
+        messages: [...newMessages],
+      };
+    }
+
+    case actions.recieveMessage: {
+      return {
+        ...state,
+        messages: [...state.messages, action.payload],
+      };
+    }
+
     case actions.joinChanel: {
       const { chanel, user } = action.payload;
       const indexChanel = state.chanelList.findIndex(
         (ch: any) => ch.id === chanel
       );
+      const currentChanelFocus = state.currentChanel._id === chanel;
+      const newMemberCurrentChanel = currentChanelFocus
+        ? {
+            ...state.currentChanel,
+            memberJoin: [
+              ...state.currentChanel.memberJoin.filter(
+                (mem: any) => mem === user._id
+              ),
+              user._id,
+            ],
+          }
+        : state.currentChanel;
       if (indexChanel > -1) {
         let newChanelList = state.chanelList;
         const indexMemberJoin = state.chanelList[
@@ -47,9 +112,13 @@ const chanelReducer = (state = initState, action: AnyAction) => {
         return {
           ...state,
           chanelList: [...newChanelList],
+          currentChanel: newMemberCurrentChanel,
         };
       } else {
-        return state;
+        return {
+          ...state,
+          currentChanel: newMemberCurrentChanel,
+        };
       }
     }
     case actions.leaveChanel: {
@@ -57,6 +126,15 @@ const chanelReducer = (state = initState, action: AnyAction) => {
       const indexChanel = state.chanelList.findIndex(
         (ch: any) => ch.id === chanel
       );
+      const currentChanelFocus = state.currentChanel._id === chanel;
+      const newMemberCurrentChanel = currentChanelFocus
+        ? {
+            ...state.currentChanel,
+            memberJoin: state.currentChanel.memberJoin.filter(
+              (mem: any) => mem !== user._id
+            ),
+          }
+        : state.currentChanel;
       if (indexChanel > -1) {
         let newChanelList = state.chanelList;
         const indexMemberJoin = state.chanelList[
@@ -73,9 +151,13 @@ const chanelReducer = (state = initState, action: AnyAction) => {
         return {
           ...state,
           chanelList: [...newChanelList],
+          currentChanel: newMemberCurrentChanel,
         };
       } else {
-        return state;
+        return {
+          ...state,
+          currentChanel: newMemberCurrentChanel,
+        };
       }
     }
     case actions.getChanelRecentSuccess: {

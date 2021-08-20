@@ -1,9 +1,12 @@
 .chanel-layout {
-  width: 258px;
+  width: 230px;
+  height: 100vh;
   background-color: #f2f3f5;
   padding-top: 70px;
   position: relative;
   z-index: 5;
+  display: flex;
+  flex-direction: column;
   .chanel-layout-skeleton {
     padding: 16px;
     .chanel-layout-skeleton-item {
@@ -146,6 +149,29 @@
       .chanel-layout-menu-item-icon {
         font-size: 24px;
         margin-right: 8px;
+      }
+    }
+  }
+
+  .chanel-layout-recent {
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+    &::-webkit-scrollbar {
+      width: 16px;
+    }
+
+    &::-webkit-scrollbar-track {
+      border: solid 2px transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      box-shadow: inset 0 0 10px 10px #888;
+      border: solid 4px transparent;
+      border-radius: 100px;
+      &:hover {
+        box-shadow: inset 0 0 12px 12px rgb(214, 214, 214);
+        border: solid 4px transparent;
       }
     }
   }

@@ -14,7 +14,6 @@ moment.locale("vi");
 
 const App = () => {
   const splashLoading = useSelector((state: any) => state.app.splashLoading);
-
   return (
     <div>
       {/* <LoadingGlobal /> */}

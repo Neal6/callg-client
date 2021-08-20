@@ -10,7 +10,10 @@ type PropTypes = {
 const DropdownMenu = (props: PropTypes) => {
   const { children, arrow, ...rest } = props;
   return (
-    <div className={`dropdown-menu  ${!!arrow ? "dropdown-menu-arrow" : ""} `}>
+    <div
+      {...rest}
+      className={`dropdown-menu  ${!!arrow ? "dropdown-menu-arrow" : ""} `}
+    >
       {children}
     </div>
   );

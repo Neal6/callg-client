@@ -31,7 +31,7 @@ apiGlobal.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error.response.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         const refreshRes = await axios({
@@ -63,7 +63,7 @@ apiGlobal.interceptors.response.use(
         store.dispatch(actionApp.splashLoadingDone());
       }
     }
-    if (error.response.status === 403) {
+    if (error.response.status === 401) {
       localStorage.clear();
       store
         .getState()

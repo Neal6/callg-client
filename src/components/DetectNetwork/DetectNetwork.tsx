@@ -31,8 +31,8 @@ const DetectNetwork = () => {
       <Detector
         polling={{
           url: "https://ipv4.icanhazip.com",
-          interval: 10000,
-          timeout: 10000,
+          interval: 20000,
+          timeout: 20000,
         }}
         onChange={(online) => {
           updateOnlineStatus(online);

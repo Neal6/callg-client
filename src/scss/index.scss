@@ -1,8 +1,9 @@
 @import "antd/dist/antd.css";
+@import "emoji-mart-virtualized/css/emoji-mart.css";
 
 :root {
   --header-height: 50px;
-  --left-layout-width: 320px;
+  --left-layout-width: 292px;
 }
 
 body {
@@ -89,5 +90,13 @@ body.dark {
   svg {
     margin-left: 1px;
     color: #000;
+  }
+}
+
+.linkify {
+  color: #0068e0;
+  font-weight: 500;
+  &:hover {
+    text-decoration: underline;
   }
 }

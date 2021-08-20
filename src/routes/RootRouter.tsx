@@ -12,6 +12,7 @@ import MePage from "@pages/MePage/MePage";
 import MainLayout from "@layouts/MainLayout";
 import ProfilePage from "@pages/ProfilePage/ProfilePage";
 import FriendPage from "@pages/FriendPage/FriendPage";
+import ChanelPage from "@pages/ChanelPage/ChanelPage";
 
 const RootRouter = () => {
   return (
@@ -54,6 +55,11 @@ const RootRouter = () => {
           <PrivateRoute
             path={`${process.env.REACT_APP_ROUTE_FRIEND}`}
             component={FriendPage}
+          />
+          <PrivateRoute
+            path={`${process.env.REACT_APP_ROUTE_CHANEL}/:id`}
+            exact
+            component={ChanelPage}
           />
           <PrivateRoute path={"*"} component={NotFoundPage} />
         </Switch>

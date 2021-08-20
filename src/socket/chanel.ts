@@ -22,6 +22,14 @@ const chanelSocketListener = (socket: any, dispatch: any, useSelector: any) => {
       })
     );
   });
+
+  socket.on("send-message", (data: any) => {
+    dispatch(
+      chanelAction.reciveMessage({
+        body: data,
+      })
+    );
+  });
 };
 
 export default chanelSocketListener;

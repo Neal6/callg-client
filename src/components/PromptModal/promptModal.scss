@@ -5,40 +5,64 @@
   top: 0;
   right: 0;
   bottom: 0;
-  background-color: #b1b1b117;
+  background-color: #a2a2a214;
   .prompt-content {
     position: absolute;
-    bottom: 50px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     background-color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    display: flex;
-    align-items: center;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius: 5px;
-    padding: 8px 24px;
-    animation: moveUp 200ms;
-    @keyframes moveUp {
-      0% {
-        bottom: -100px;
+    padding: 24px;
+    width: 400px;
+
+    .prompt-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #00000012;
+      margin: 0px -24px;
+      padding: 12px 24px;
+      padding-top: 0px;
+      margin-bottom: 16px !important;
+      .prompt-header-title {
+        font-size: 18px;
       }
-      100% {
-        bottom: 50px;
+      .prompt-header-close {
+        width: 28px;
+        height: 28px;
+        background-color: #f2f3f4;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        svg {
+          font-size: 20px;
+        }
       }
     }
+
     .prompt-content-text {
-      font-size: 13px;
-      font-weight: 700;
-      margin-right: 16px;
-      flex: 1;
+      font-size: 14px;
+      color: #5a5a5a;
+    }
+
+    .prompt-content-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
     }
     .prompt-content-cancel {
       border-radius: 3px;
       margin-right: 12px;
       cursor: pointer;
       font-size: 15px;
-      font-weight: 400;
+      font-weight: 500;
       color: #888;
+      padding: 6px 12px;
+      width: fit-content;
       &:hover {
         color: #000;
       }
@@ -47,10 +71,11 @@
       border-radius: 3px;
       background-color: #009688;
       font-size: 15px;
-      font-weight: 400;
-      padding: 6px 8px;
+      font-weight: 500;
+      padding: 4px 24px;
       color: #fff;
       cursor: pointer;
+      width: fit-content;
       &:hover {
         background-color: #008a7d;
       }
