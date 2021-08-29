@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Skeleton from "react-loading-skeleton";
-import { useParams } from "react-router";
+import { useParams, Link } from "react-router-dom";
 import { CgPhone, CgBoard } from "react-icons/cg";
 import { BsCameraVideoFill } from "react-icons/bs";
 import { TiUserAdd } from "react-icons/ti";
@@ -66,21 +66,30 @@ const ChanelHeader = () => {
             <>
               <div className="chanel-header-member">
                 <div className="chanel-header-member-info">
-                  <ImageWithDefault
-                    className="chanel-header-member-info-avatar"
-                    src={memberOthor.avatar}
-                  />
-                  <DotOnline
-                    className="chanel-header-member-info-dot"
-                    isOnline={isOnline}
-                  />
-                </div>
-                <div
-                  className={`chanel-header-member-status ${
-                    isOnline ? "chanel-header-member-status--active" : ""
-                  } `}
-                >
-                  {isOnline ? "Trực tuyến" : "Ngoại tuyến"}
+                  <Link
+                    to={`${process.env.REACT_APP_ROUTE_PROFILE}/${memberOthor.id}`}
+                  >
+                    <ImageWithDefault
+                      className="chanel-header-member-info-avatar"
+                      src={memberOthor.avatar}
+                    />
+                    <DotOnline
+                      className="chanel-header-member-info-dot"
+                      isOnline={isOnline}
+                    />
+                  </Link>
+                  <div className="chanel-header-member-info-wrap-name">
+                    <div className="chanel-header-member-info-name">
+                      {memberOthor.name}
+                    </div>
+                    <div
+                      className={`chanel-header-member-status ${
+                        isOnline ? "chanel-header-member-status--active" : ""
+                      } `}
+                    >
+                      {isOnline ? "Trực tuyến" : "Ngoại tuyến"}
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="chanel-header-menu">

@@ -38,3 +38,24 @@ export const sendMessage = (data: any) => {
     socket.emit("send-message", data);
   }
 };
+
+export const typingMessage = (data: any) => {
+  const socket = store.getState().socketIo.socket;
+  if (socket) {
+    socket.emit("typing-message", data);
+  }
+};
+
+export const stopTypingMessage = (data: any) => {
+  const socket = store.getState().socketIo.socket;
+  if (socket) {
+    socket.emit("stop-typing-message", data);
+  }
+};
+
+export const addUnknownChanel = (data: any) => {
+  const socket = store.getState().socketIo.socket;
+  if (socket) {
+    socket.emit("add-unknown-chanel", data);
+  }
+};

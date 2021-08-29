@@ -41,4 +41,13 @@ export const acceptFriend = "@AUTH/ACCEPT_FRIEND";
 
 export const unFriend = "@AUTH/UN_FRIEND";
 
+export const receiveMessage = "@AUTH/RECEIVE_MESSAGE";
+
+export const sendMessage = "@AUTH/SEND_MESSAGE";
+
+export const seenMessage = "@AUTH/SEEN_MESSAGE";
+export const seenMessageSuccess = "@AUTH/SEEN_MESSAGE_SUCCESS";
+
+export const addChanel = "@AUTH/ADD_CHANEL";
+
 export const logout = "LOGOUT";

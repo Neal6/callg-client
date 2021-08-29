@@ -14,7 +14,7 @@ type PropTypes = {
   value?: string;
 };
 
-const TextAreaBasic = (props: PropTypes) => {
+const TextAreaBasic = React.forwardRef((props: PropTypes, ref: any) => {
   const { className, style, value, ...rest } = props;
 
   return (
@@ -26,6 +26,6 @@ const TextAreaBasic = (props: PropTypes) => {
       {...rest}
     />
   );
-};
+});
 
 export default TextAreaBasic;

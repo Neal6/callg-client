@@ -1,5 +1,6 @@
-import React, { useMemo, useRef, useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useMemo, useRef } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Tooltip } from "antd";
 import moment from "moment";
 import { BiDotsVerticalRounded } from "react-icons/bi";
@@ -16,11 +17,12 @@ type PropTypes = {
   members: any;
   withAvatar: boolean;
   onScrollToBottom: any;
+  lastMessage: boolean;
 };
 
 const Message = (props: PropTypes) => {
   const { content, sender, createdAt, key, embeds } = props.message;
-  const { withAvatar, members, onScrollToBottom } = props;
+  const { withAvatar, members, onScrollToBottom, lastMessage } = props;
   const {
     _id: meId,
     avatar,
@@ -29,21 +31,14 @@ const Message = (props: PropTypes) => {
   const senderDetail =
     meId === sender
       ? { id: meId, avatar, name: fullName }
-      : members.find((mem: any) => mem.id === sender);
-  const [textWidth, setTextWidth] = useState<number>();
+      : members?.find((mem: any) => mem.id === sender) || {};
   const textRef = useRef<any>();
 
-  useEffect(() => {
-    if (embeds?.url) {
-      setTextWidth(textRef?.current?.offsetWidth);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (textWidth) {
+  const onLoadImage = (error: boolean) => {
+    if (lastMessage) {
       onScrollToBottom();
     }
-  }, [textWidth]);
+  };
 
   return (
     <>
@@ -62,10 +57,14 @@ const Message = (props: PropTypes) => {
                       placement={meId === sender ? "bottomRight" : "bottomLeft"}
                       title={senderDetail.name}
                     >
-                      <ImageWithDefault
-                        className="message-avatar-image"
-                        src={senderDetail.avatar}
-                      />
+                      <Link
+                        to={`${process.env.REACT_APP_ROUTE_PROFILE}/${sender}`}
+                      >
+                        <ImageWithDefault
+                          className="message-avatar-image"
+                          src={senderDetail.avatar}
+                        />
+                      </Link>
                     </Tooltip>
                   )}
                 </div>
@@ -82,31 +81,40 @@ const Message = (props: PropTypes) => {
                   } `}
                 >
                   <div className="message-content-text" ref={textRef}>
-                    <Linkify
-                      componentDecorator={(
-                        decoratedHref,
-                        decoratedText,
-                        key
-                      ) => (
-                        <a
-                          target="blank"
-                          className="linkify"
-                          href={decoratedHref}
-                          key={key}
-                        >
-                          {decoratedText}
-                        </a>
-                      )}
-                    >
-                      {content.trim()}
-                    </Linkify>
+                    <div className="message-content-text-value">
+                      <Linkify
+                        componentDecorator={(
+                          decoratedHref,
+                          decoratedText,
+                          key
+                        ) => (
+                          <a
+                            target="blank"
+                            className="linkify"
+                            href={decoratedHref}
+                            key={key}
+                          >
+                            {decoratedText}
+                          </a>
+                        )}
+                      >
+                        {content.trim()}
+                      </Linkify>
+                    </div>
                   </div>
                   {embeds?.url && (
                     <a href={embeds.url} target="_blank">
                       <div className="message-content-embeds">
                         <ImageCheckError
+                          onLoad={onLoadImage}
                           className="message-content-embeds-image"
-                          src={embeds.images[0] || embeds.favicons[0]}
+                          src={embeds.images[0]}
+                          imageReplace={
+                            embeds.favicons[0] ||
+                            embeds.favicons[1] ||
+                            embeds.favicons[2]
+                          }
+                          alt={embeds.description}
                         />
                         <div className="message-content-embeds-detail">
                           <div className="message-content-embeds-title">
@@ -151,11 +159,13 @@ const Message = (props: PropTypes) => {
                         />
                       </div>
                     </Tooltip>
-                    <Tooltip placement="top" title={"Chỉnh sửa"}>
-                      <div className="message-menu-icon">
-                        <HiOutlinePencil />
-                      </div>
-                    </Tooltip>
+                    {meId === sender && (
+                      <Tooltip placement="top" title={"Chỉnh sửa"}>
+                        <div className="message-menu-icon">
+                          <HiOutlinePencil />
+                        </div>
+                      </Tooltip>
+                    )}
                     <Tooltip placement="top" title={"Mục khác"}>
                       <div className="message-menu-icon">
                         <BiDotsVerticalRounded />
@@ -177,7 +187,7 @@ const Message = (props: PropTypes) => {
             </div>
           </div>
         ),
-        [props.message, textWidth]
+        [props.message, withAvatar]
       )}
     </>
   );

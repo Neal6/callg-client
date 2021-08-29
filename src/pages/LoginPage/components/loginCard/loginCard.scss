@@ -41,7 +41,7 @@
       margin-top: 24px;
       border-radius: 10px;
       padding: 10px;
-      font-weight: 400;
+      font-weight: 600;
       background-color: #03a9f4;
       font-size: 15px;
     }
@@ -135,5 +135,42 @@
         font-weight: 700;
       }
     }
+  }
+}
+
+.dot-typing-login {
+  position: relative;
+  left: -9990px;
+  width: 5px;
+  height: 5px;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #fff;
+  margin: 9px 0px;
+  box-shadow: 9984px 0 0 0 #fff, 9996px 0 0 0 #fff, 10008px 0 0 0 #fff;
+  animation: dotTypingLogin 1.5s infinite linear;
+}
+
+@keyframes dotTypingLogin {
+  0% {
+    box-shadow: 9984px 0 0 0 #fff, 9996px 0 0 0 #fff, 10008px 0 0 0 #fff;
+  }
+  16.667% {
+    box-shadow: 9984px -2px 0 0 #fff, 9996px 0 0 0 #fff, 10008px 0 0 0 #fff;
+  }
+  33.333% {
+    box-shadow: 9984px 0 0 0 #fff, 9996px 0 0 0 #fff, 10008px 0 0 0 #fff;
+  }
+  50% {
+    box-shadow: 9984px 0 0 0 #fff, 9996px -2px 0 0 #fff, 10008px 0 0 0 #fff;
+  }
+  66.667% {
+    box-shadow: 9984px 0 0 0 #fff, 9996px 0 0 0 #fff, 10008px 0 0 0 #fff;
+  }
+  83.333% {
+    box-shadow: 9984px 0 0 0 #fff, 9996px 0 0 0 #fff, 10008px -2px 0 0 #fff;
+  }
+  100% {
+    box-shadow: 9984px 0 0 0 #fff, 9996px 0 0 0 #fff, 10008px 0 0 0 #fff;
   }
 }

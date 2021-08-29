@@ -138,6 +138,16 @@ function* updateAvatar(action: any) {
   } catch (error) {}
 }
 
+function* seenMessage(action: any) {
+  try {
+    const res = yield userService.seenMessage(action.payload);
+    yield put({
+      type: actionAuthType.seenMessageSuccess,
+      payload: action.payload,
+    });
+  } catch (error) {}
+}
+
 function* authSaga() {
   yield takeLatest(actionAuthType.login, login);
   yield takeLatest(actionAuthType.loginWithToken, loginWithToken);
@@ -148,6 +158,7 @@ function* authSaga() {
   yield takeLatest(actionAuthType.loginWithFacebook, loginWithFacebook);
   yield takeLatest(actionAuthType.updateProfile, updateProfile);
   yield takeLatest(actionAuthType.updateAvatar, updateAvatar);
+  yield takeLatest(actionAuthType.seenMessage, seenMessage);
 }
 
 export default authSaga;

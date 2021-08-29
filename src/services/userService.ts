@@ -58,3 +58,7 @@ export const acceptFriend = (data: any) => {
 export const unFriend = (data: any) => {
   return apiGlobal.put(replaceParamUrl(userUrl.unFriend, []), data.body);
 };
+
+export const seenMessage = (data: any) => {
+  return apiGlobal.put(userUrl.seenMessage, data.body);
+};

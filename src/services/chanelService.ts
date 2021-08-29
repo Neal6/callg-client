@@ -10,6 +10,14 @@ export const getChanel = (data: any) => {
   return apiGlobal.get(replaceParamUrl(chanelUrl.getChanel, [data]));
 };
 
+export const getChanelMemberJoin = (data: any) => {
+  return apiGlobal.get(
+    formatQueryUrl(chanelUrl.getChanelMemberJoin, {
+      member: JSON.stringify(data.members),
+    })
+  );
+};
+
 export const sendMessage = (data: any) => {
   return apiGlobal.post(
     replaceParamUrl(chanelUrl.sendMessage, [data.chanelId]),
@@ -18,10 +26,10 @@ export const sendMessage = (data: any) => {
 };
 
 export const getMessages = (data: any) => {
-  const { page, pageSize, chanelId } = data;
+  const { dateBefore, pageSize, chanelId } = data;
   return apiGlobal.get(
-    formatQueryUrl(replaceParamUrl(chanelUrl.getMessages, [data.chanelId]), {
-      page,
+    formatQueryUrl(replaceParamUrl(chanelUrl.getMessages, [chanelId]), {
+      dateBefore,
       pageSize,
     })
   );

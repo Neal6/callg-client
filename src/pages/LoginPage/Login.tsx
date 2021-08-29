@@ -24,12 +24,7 @@ const Login = () => {
       {/* <div className="login-logo">
         <img src={Logo} alt="" />
       </div> */}
-      {(loadingLogin === true || isLogin) && (
-        <div className="login-loading">
-          <img className="login-loading-image" src={loadingImage} alt="" />
-          <p className="login-loading-text">Chờ một chút nhé !!!</p>
-        </div>
-      )}
+
       <LoginCard />
       <div className="login-policy">
         <span>Chính sách Riêng tư</span>

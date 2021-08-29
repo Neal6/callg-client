@@ -213,7 +213,11 @@ const LoginCard = () => {
           <TextErrorValidate>Mật khẩu không được để trống</TextErrorValidate>
         )}
         <ButtonSubmit disabled={loadingLogin} className="login-form-submit">
-          {loadingLogin ? "Loading..." : "Đăng Nhập"}
+          {loadingLogin ? (
+            <div className="dot-typing-login"></div>
+          ) : (
+            "Đăng Nhập"
+          )}
         </ButtonSubmit>
         <Link className="login-card__register" to="/register">
           Chưa có tài khoản?

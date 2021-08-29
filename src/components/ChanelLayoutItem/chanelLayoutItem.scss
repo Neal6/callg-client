@@ -5,6 +5,7 @@
   align-items: center;
   cursor: pointer;
   border-radius: 5px;
+  position: relative;
   &--active {
     background-color: #b3c7ff33 !important;
   }
@@ -32,6 +33,10 @@
     font-weight: 400;
     font-size: 13px;
     color: #000;
+    &--no-seen {
+      font-weight: 600;
+      color: #000;
+    }
   }
   .chanel-layout-item-last-message {
     font-size: 12px;
@@ -40,5 +45,84 @@
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    word-break: break-all;
+    max-width: 85%;
+    height: 22px;
+
+    &--no-seen {
+      font-weight: 600;
+      color: #000;
+    }
+    .dot-typing {
+      margin-left: 6px;
+      margin-top: 10px;
+      position: relative;
+      left: -9990px;
+      width: 5px;
+      height: 5px;
+      border-radius: 6px;
+      background-color: #7d7c7c;
+      color: #7d7c7c;
+      box-shadow: 9984px 0 0 0 #7d7c7c, 9992px 0 0 0 #7d7c7c,
+        10000px 0 0 0 #7d7c7c;
+      animation: dotTypingList 1.5s infinite linear;
+    }
+
+    @keyframes dotTypingList {
+      0% {
+        box-shadow: 9984px 0 0 0 #7d7c7c, 9992px 0 0 0 #7d7c7c,
+          10000px 0 0 0 #7d7c7c;
+      }
+      16.667% {
+        box-shadow: 9984px -2px 0 0 #7d7c7c, 9992px 0 0 0 #7d7c7c,
+          10000px 0 0 0 #7d7c7c;
+      }
+      33.333% {
+        box-shadow: 9984px 0 0 0 #7d7c7c, 9992px 0 0 0 #7d7c7c,
+          10000px 0 0 0 #7d7c7c;
+      }
+      50% {
+        box-shadow: 9984px 0 0 0 #7d7c7c, 9992px -2px 0 0 #7d7c7c,
+          10000px 0 0 0 #7d7c7c;
+      }
+      66.667% {
+        box-shadow: 9984px 0 0 0 #7d7c7c, 9992px 0 0 0 #7d7c7c,
+          10000px 0 0 0 #7d7c7c;
+      }
+      83.333% {
+        box-shadow: 9984px 0 0 0 #7d7c7c, 9992px 0 0 0 #7d7c7c,
+          10000px -2px 0 0 #7d7c7c;
+      }
+      100% {
+        box-shadow: 9984px 0 0 0 #7d7c7c, 9992px 0 0 0 #7d7c7c,
+          10000px 0 0 0 #7d7c7c;
+      }
+    }
+  }
+  .chanel-layout-item-not-seen {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+
+    .chanel-layout-item-not-seen-count {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      font-size: 12px;
+      background-color: #bdbdbd63;
+      color: #656565;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+        rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    }
+    .chanel-layout-item-not-seen-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: blue;
+    }
   }
 }

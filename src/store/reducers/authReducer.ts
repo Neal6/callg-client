@@ -11,6 +11,7 @@ type authTypes = {
   requestFriend: any;
   friends: any;
   chanels: any;
+  notSeenChanels: any;
 };
 
 const initState: authTypes = {
@@ -21,6 +22,7 @@ const initState: authTypes = {
   chanels: [],
   errorLoginMessage: "",
   errorRegisterMessage: "",
+  notSeenChanels: [],
 };
 
 const authReducer = (state = initState, action: AnyAction) => {
@@ -171,6 +173,65 @@ const authReducer = (state = initState, action: AnyAction) => {
       return {
         ...state,
         friends: [...newFriends],
+      };
+    }
+
+    case authType.sendMessage: {
+      const chanelSendIndex = state.notSeenChanels.findIndex(
+        (item: any) => item.chanel == action.payload.message.chanelId
+      );
+      const newNotSeenChanels = state.notSeenChanels;
+      if (chanelSendIndex > -1) {
+        newNotSeenChanels.splice(chanelSendIndex, 1);
+      }
+      return {
+        ...state,
+        notSeenChanels: [...newNotSeenChanels],
+      };
+    }
+
+    case authType.receiveMessage: {
+      const chanelReceiveIndex = state.notSeenChanels.findIndex(
+        (item: any) => item.chanel == action.payload.body.chanelId
+      );
+      const newNotSeenChanels = state.notSeenChanels;
+      if (chanelReceiveIndex > -1) {
+        newNotSeenChanels[chanelReceiveIndex].count += 1;
+      } else {
+        newNotSeenChanels.push({
+          chanel: action.payload.body.chanelId,
+          count: 1,
+        });
+      }
+      return {
+        ...state,
+        notSeenChanels: [...newNotSeenChanels],
+      };
+    }
+
+    case authType.seenMessageSuccess: {
+      const chanelReceiveIndex = state.notSeenChanels.findIndex(
+        (item: any) => item.chanel == action.payload.body.chanelId
+      );
+      const newNotSeenChanels = state.notSeenChanels;
+      if (chanelReceiveIndex > -1) {
+        newNotSeenChanels.splice(chanelReceiveIndex, 1);
+      }
+      return {
+        ...state,
+        notSeenChanels: [...newNotSeenChanels],
+      };
+    }
+
+    case authType.addChanel: {
+      const { chanel } = action.payload;
+      const newChanels = state.chanels;
+      if (!newChanels.find((ch: string) => ch == chanel)) {
+        newChanels.push(chanel);
+      }
+      return {
+        ...state,
+        chanels: [...newChanels],
       };
     }
 

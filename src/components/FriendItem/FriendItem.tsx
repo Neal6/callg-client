@@ -9,6 +9,7 @@ import ImageWithDefault from "@components/ImageWithDefault/ImageWithDefault";
 import "./friendItem.scss";
 import DotOnline from "@components/DotOnline/DotOnline";
 import * as userAction from "@store/actions/userActions";
+import * as chanelAction from "@store/actions/chanelAction";
 import DropdownMenu from "@components/DropdownMenu/DropdownMenu";
 
 type PropTypes = {
@@ -84,6 +85,10 @@ const FriendItem = (props: PropTypes) => {
     </DropdownMenu>
   );
 
+  const onClickMessage = () => {
+    dispatch(chanelAction.getChanelMemberJoin({ body: { members: [id] } }));
+  };
+
   return (
     <div className="friend-add-item-wrap">
       <div className="friend-add-item">
@@ -117,7 +122,7 @@ const FriendItem = (props: PropTypes) => {
         </div>
         <div className="friend-add-item-contact">
           <Tooltip placement="top" title={"Nhắn tin"}>
-            <div className="friend-add-item-message">
+            <div className="friend-add-item-message" onClick={onClickMessage}>
               <svg
                 className="icon-35-fSh"
                 aria-hidden="false"

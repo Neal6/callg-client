@@ -16,8 +16,16 @@ export const getChanel = (payload: payloadType) => {
   return { type: actions.getChanel, payload: payload.body };
 };
 
+export const getChanelMemberJoin = (payload: payloadType) => {
+  return { type: actions.getChanelMemberJoin, payload: payload };
+};
+
 export const getMessages = (payload: payloadType) => {
   return { type: actions.getMessages, payload: payload.body };
+};
+
+export const getMessagesMore = (payload: payloadType) => {
+  return { type: actions.getMessagesMore, payload: payload.body };
 };
 
 export const joinChanel = (payload: payloadType) => {
@@ -33,5 +41,17 @@ export const sendMessage = (payload: payloadType) => {
 };
 
 export const reciveMessage = (payload: payloadType) => {
-  return { type: actions.recieveMessage, payload: payload.body };
+  return { type: actions.recieveMessage, payload: payload };
+};
+
+export const typingMessage = (payload: payloadType) => {
+  return { type: actions.typingMessage, payload: payload.body };
+};
+
+export const stopTypingMessage = (payload: payloadType) => {
+  return { type: actions.stopTypingMessage, payload: payload.body };
+};
+
+export const clearCurrentChanel = () => {
+  return { type: actions.clearCurrentChanel };
 };

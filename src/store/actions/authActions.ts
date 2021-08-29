@@ -101,3 +101,24 @@ export const unFriend = (payload: any) => {
     payload,
   };
 };
+
+export const receiveMessage = (payload: any) => {
+  return {
+    type: actions.receiveMessage,
+    payload,
+  };
+};
+
+export const seenMessage = (payload: any) => {
+  return {
+    type: actions.seenMessage,
+    payload,
+  };
+};
+
+export const addChanel = (payload: any) => {
+  return {
+    type: actions.addChanel,
+    payload,
+  };
+};

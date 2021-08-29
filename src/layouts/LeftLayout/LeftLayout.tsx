@@ -18,6 +18,7 @@ const LeftLayout = (props: PropsType) => {
   const receiveRequestFriend = useSelector(
     (state: any) => state.auth.receiveRequestFriend
   );
+  const notSeenChanels = useSelector((state: any) => state.auth.notSeenChanels);
 
   return (
     <div className="left-layout">
@@ -35,7 +36,9 @@ const LeftLayout = (props: PropsType) => {
             to={`${process.env.REACT_APP_ROUTE_PROFILE}/60fcc0499667ae3cd8f32fa1`}
             className="left-layout-function-item "
           >
-            <FiMessageCircle className="left-layout-function-item-icon " />
+            <Badge count={notSeenChanels?.length || 0} overflowCount={9}>
+              <FiMessageCircle className="left-layout-function-item-icon " />
+            </Badge>
           </Link>
         </Tooltip>
         <Tooltip placement="right" title={"Gọi nhóm"}>

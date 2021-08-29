@@ -90,7 +90,7 @@ const MeView = (props: PropTypes) => {
             <input
               id="file-avatar"
               type="file"
-              accept="image/png, image/gif, image/jpeg"
+              accept="image/png, image/jpeg"
               onChange={onSelectAvatar}
               ref={avatarSelectRef}
             />

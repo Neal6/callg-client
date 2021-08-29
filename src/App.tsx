@@ -9,6 +9,8 @@ import RootRouter from "@routes/RootRouter";
 import SplashPage from "@pages/SplashPage/SplashPage";
 import PromptModal from "@components/PromptModal/PromptModal";
 import DetectNetwork from "@components/DetectNetwork/DetectNetwork";
+import Audio from "@components/Audio/Audio";
+import ModalGlobal from "@components/ModalGlobal/ModalGlobal";
 
 moment.locale("vi");
 
@@ -18,6 +20,7 @@ const App = () => {
     <div>
       {/* <LoadingGlobal /> */}
       <PromptModal />
+      <ModalGlobal />
       <SplashPage />
       {!splashLoading && <RootRouter />}
       <DetectNetwork />
@@ -32,6 +35,7 @@ const App = () => {
         draggable
         pauseOnHover
       />
+      <Audio />
     </div>
   );
 };

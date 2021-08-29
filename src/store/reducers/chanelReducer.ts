@@ -30,7 +30,11 @@ const chanelReducer = (state = initState, action: AnyAction) => {
     }
 
     case actions.getChanelSuccess: {
-      return { ...state, currentChanel: action.payload, errorGetChanel: false };
+      return {
+        ...state,
+        currentChanel: { ...state.currentChanel, ...action.payload },
+        errorGetChanel: false,
+      };
     }
 
     case actions.getChanelFail: {
@@ -38,7 +42,27 @@ const chanelReducer = (state = initState, action: AnyAction) => {
     }
 
     case actions.getMessagesSuccess: {
-      return { ...state, messages: action.payload };
+      const { messages, pageSize } = action.payload;
+      return {
+        ...state,
+        currentChanel: {
+          ...state.currentChanel,
+          loadMore: messages.length === pageSize,
+        },
+        messages: messages,
+      };
+    }
+
+    case actions.getMessagesMoreSuccess: {
+      const { messages, pageSize } = action.payload;
+      return {
+        ...state,
+        currentChanel: {
+          ...state.currentChanel,
+          loadMore: messages.length === pageSize,
+        },
+        messages: [...messages, ...state.messages],
+      };
     }
 
     case actions.getChanelRecentSuccess: {
@@ -68,16 +92,44 @@ const chanelReducer = (state = initState, action: AnyAction) => {
       );
       const newMessages = state.messages;
       newMessages.splice(messagePreview, 1, action.payload.message);
+
+      const chanelIndex = state.chanelList.findIndex(
+        (chanel: any) => chanel.id == action.payload.message.chanelId
+      );
+      const newChanelList = state.chanelList;
+      if (chanelIndex > -1) {
+        const chanelDetail = state.chanelList[chanelIndex];
+        newChanelList.splice(chanelIndex, 1);
+        newChanelList.unshift({
+          ...chanelDetail,
+          lastMessage: action.payload.message,
+        });
+      }
+
       return {
         ...state,
+        chanelList: [...newChanelList],
         messages: [...newMessages],
       };
     }
 
     case actions.recieveMessage: {
+      const { body, chanelReive } = action.payload;
+      const chanelIndex = state.chanelList.findIndex(
+        (chanel: any) => chanel.id == body.chanelId
+      );
+      const newChanelList = state.chanelList;
+      if (chanelIndex > -1) {
+        const chanelDetail = state.chanelList[chanelIndex];
+        newChanelList.splice(chanelIndex, 1);
+        newChanelList.unshift({ ...chanelDetail, lastMessage: body });
+      } else if (chanelReive.id) {
+        newChanelList.unshift(chanelReive);
+      }
       return {
         ...state,
-        messages: [...state.messages, action.payload],
+        chanelList: [...newChanelList],
+        messages: [...state.messages, body],
       };
     }
 
@@ -121,6 +173,88 @@ const chanelReducer = (state = initState, action: AnyAction) => {
         };
       }
     }
+
+    case actions.typingMessage: {
+      const { chanelId, user } = action.payload;
+      const indexTypingCurrent =
+        (state.currentChanel._id == chanelId &&
+          state.currentChanel.typingMember &&
+          state.currentChanel.typingMember.findIndex(
+            (mem: any) => mem.id == user.id
+          )) ||
+        -2;
+      const newTypingMem = state.currentChanel.typingMember || [];
+      if (indexTypingCurrent == -1) {
+        newTypingMem.push(user);
+      }
+
+      //chanel list
+      const indexChanelList = state.chanelList.findIndex(
+        (chanel: any) => chanel.id == chanelId
+      );
+      const newChanelList = state.chanelList;
+      if (indexChanelList > -1) {
+        const indexTypingChanelList =
+          state.chanelList[indexChanelList].typingMember?.findIndex(
+            (mem: any) => mem.id == user.id
+          ) || -1;
+        if (indexTypingChanelList == -1) {
+          newChanelList[indexChanelList].typingMember = [
+            ...(newChanelList[indexChanelList].typingMember || []),
+            user,
+          ];
+        }
+      }
+      return {
+        ...state,
+        chanelList: [...newChanelList],
+        currentChanel: {
+          ...state.currentChanel,
+          typingMember: [...newTypingMem],
+        },
+      };
+    }
+
+    case actions.stopTypingMessage: {
+      const { chanelId, user } = action.payload;
+      const indexTypingCurrent =
+        state.currentChanel._id == chanelId &&
+        state.currentChanel.typingMember &&
+        state.currentChanel.typingMember.findIndex(
+          (mem: any) => mem.id == user.id
+        );
+      const newTypingMem = state.currentChanel.typingMember || [];
+      if (indexTypingCurrent > -1) {
+        newTypingMem.splice(indexTypingCurrent, 1);
+      }
+
+      // chanel list
+      const indexChanelList = state.chanelList.findIndex(
+        (chanel: any) => chanel.id == chanelId
+      );
+      const newChanelList = state.chanelList;
+      if (indexChanelList > -1) {
+        const indexTypingChanelList = state.chanelList[
+          indexChanelList
+        ].typingMember?.findIndex((mem: any) => mem.id == user.id);
+        if (indexTypingChanelList > -1) {
+          newChanelList[indexChanelList].typingMember.splice(
+            indexTypingChanelList,
+            1
+          );
+        }
+      }
+
+      return {
+        ...state,
+        chanelList: [...newChanelList],
+        currentChanel: {
+          ...state.currentChanel,
+          typingMember: [...newTypingMem],
+        },
+      };
+    }
+
     case actions.leaveChanel: {
       const { chanel, user } = action.payload;
       const indexChanel = state.chanelList.findIndex(
@@ -164,6 +298,14 @@ const chanelReducer = (state = initState, action: AnyAction) => {
       return {
         ...state,
         chanelList: action.payload,
+      };
+    }
+    case actions.clearCurrentChanel: {
+      return {
+        ...state,
+        currentChanel: {},
+        messages: [],
+        errorGetChanel: false,
       };
     }
     default:
