@@ -33,13 +33,12 @@ const chanelSocketListener = (socket: any, dispatch: any, useSelector: any) => {
     if (
       !store
         .getState()
-        .chanel.chanelList.find((chanel: any) => chanel.id == data.chanelId)
+        .chanel.chanelList.find((chanel: any) => chanel._id == data.chanelId)
     ) {
       const res = await apiGlobal.get(
         replaceParamUrl(chanelUrl.getChanel, [data.chanelId])
       );
-      const { _id, ...rest } = res.data;
-      chanelReive = { ...rest, id: _id };
+      chanelReive = res.data;
     }
     dispatch(appAction.playSoundMessage());
     dispatch(
@@ -50,6 +49,22 @@ const chanelSocketListener = (socket: any, dispatch: any, useSelector: any) => {
     );
     dispatch(
       authAction.receiveMessage({
+        body: data,
+      })
+    );
+  });
+
+  socket.on("update-message", async (data: any) => {
+    dispatch(
+      chanelAction.reciveUpdateMessage({
+        body: data,
+      })
+    );
+  });
+
+  socket.on("delete-message", async (data: any) => {
+    dispatch(
+      chanelAction.reciveDeleteMessage({
         body: data,
       })
     );

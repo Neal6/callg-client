@@ -40,6 +40,7 @@ const ChanelContent = () => {
   const [pageSize, setPageSize] = useState<number>(50);
   const [isNewMessage, setIsNewMessage] = useState<boolean>(false);
   const [initScrollBottom, setInitScrollBottom] = useState<boolean>(false);
+  const messageCount = useRef<number>(0);
   const isScrollRef = useRef<any>(false);
   const scrollRef = useRef<any>();
   const loadMoreRef = useRef<boolean>(false);
@@ -91,6 +92,25 @@ const ChanelContent = () => {
   };
 
   useEffect(() => {
+    const onRightClick = (e: any) => {
+      if (
+        e.target.className.includes("message-content-text") ||
+        e.target.className.includes("message-attachment") ||
+        e.target.className.includes("message-content-embeds")
+      ) {
+      } else {
+        e.preventDefault();
+      }
+    };
+    if (loadingGetMessages === false || initScrollBottom) {
+      scrollRef?.current?.addEventListener("contextmenu", onRightClick);
+    }
+    return () => {
+      scrollRef?.current?.removeEventListener("contextmenu", onRightClick);
+    };
+  }, [loadingGetMessages, id]);
+
+  useEffect(() => {
     if (loadingGetMessages === false) {
       seenMessage();
       new Promise((resolve) => {
@@ -111,15 +131,14 @@ const ChanelContent = () => {
       });
     }
   }, [loadingGetMessages]);
-
   useEffect(() => {
-    if (loadingGetMessages === false) {
+    if (loadingGetMessages === false || initScrollBottom) {
       scrollRef.current.addEventListener("click", onClickBodyMessage);
     }
     return () => {
       scrollRef?.current?.removeEventListener("click", onClickBodyMessage);
     };
-  }, [loadingGetMessages, id]);
+  }, [loadingGetMessages, id, initScrollBottom, notSeenChanels]);
 
   useEffect(() => {
     if (loadingGetMessages === false) {
@@ -140,8 +159,11 @@ const ChanelContent = () => {
 
   useEffect(() => {
     const lastMessage = messages[messages.length - 1] || {};
-
-    if (initScrollBottom && !loadMoreRef.current) {
+    if (
+      initScrollBottom &&
+      !loadMoreRef.current &&
+      messageCount.current <= messages.length
+    ) {
       onScrollBottomCondition();
     }
     if (loadMoreRef.current) {
@@ -157,6 +179,7 @@ const ChanelContent = () => {
     ) {
       setIsNewMessage(true);
     }
+    messageCount.current = messages.length;
   }, [messages.length, initScrollBottom]);
 
   const onScroll = () => {
@@ -243,7 +266,6 @@ const ChanelContent = () => {
     scrollToBottom();
     seenMessage();
   };
-
   return (
     <div className="chanel-content-wrap" id="chanel-content-wrap">
       {loadingGetMessagesMore === true && (

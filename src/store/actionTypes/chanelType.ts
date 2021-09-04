@@ -35,10 +35,28 @@ export const sendMessageStart = "@CHANEL/SEND_MESSAGE_START";
 export const sendMessageSuccess = "@CHANEL/SEND_MESSAGE_SUCCESS";
 export const sendMessageFail = "@CHANEL/SEND_MESSAGE_FAIL";
 
+export const updateMessage = "@CHANEL/UPDATE_MESSAGE";
+export const updateMessageStart = "@CHANEL/UPDATE_MESSAGE_START";
+export const updateMessageSuccess = "@CHANEL/UPDATE_MESSAGE_SUCCESS";
+export const updateMessageFail = "@CHANEL/UPDATE_MESSAGE_FAIL";
+
+export const deleteMessage = "@CHANEL/DELETE_MESSAGE";
+export const deleteMessageStart = "@CHANEL/DELETE_MESSAGE_START";
+export const deleteMessageSuccess = "@CHANEL/DELETE_MESSAGE_SUCCESS";
+export const deleteMessageFail = "@CHANEL/DELETE_MESSAGE_FAIL";
+
 export const recieveMessage = "@CHANEL/RECIEVE_MESSAGE";
+export const recieveUpdateMessage = "@CHANEL/RECIEVE_UPDATE_MESSAGE";
+export const recieveDeleteMessage = "@CHANEL/RECIEVE_DELETE_MESSAGE";
 
 export const typingMessage = "@CHANEL/TYPING_MESSAGE";
 
 export const stopTypingMessage = "@CHANEL/STOP_TYPING_MESSAGE";
+
+export const editMessage = "@CHANEL/EDIT_MESSAGE";
+export const clearEditMessage = "@CHANEL/CLEAR_EDIT_MESSAGE";
+
+export const replyMessage = "@CHANEL/REPLY_MESSAGE";
+export const clearReplyMessage = "@CHANEL/CLEAR_REPLY_MESSAGE";
 
 export const clearCurrentChanel = "@CHANEL/CLEAR_CURRENT_CHANEL";

@@ -176,20 +176,6 @@ const authReducer = (state = initState, action: AnyAction) => {
       };
     }
 
-    case authType.sendMessage: {
-      const chanelSendIndex = state.notSeenChanels.findIndex(
-        (item: any) => item.chanel == action.payload.message.chanelId
-      );
-      const newNotSeenChanels = state.notSeenChanels;
-      if (chanelSendIndex > -1) {
-        newNotSeenChanels.splice(chanelSendIndex, 1);
-      }
-      return {
-        ...state,
-        notSeenChanels: [...newNotSeenChanels],
-      };
-    }
-
     case authType.receiveMessage: {
       const chanelReceiveIndex = state.notSeenChanels.findIndex(
         (item: any) => item.chanel == action.payload.body.chanelId

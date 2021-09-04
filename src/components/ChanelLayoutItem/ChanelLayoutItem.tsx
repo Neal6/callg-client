@@ -19,16 +19,16 @@ const ChanelLayoutItem = (props: PropTypes) => {
   const notSeenChanels = useSelector(
     (state: any) => state.auth.notSeenChanels || []
   );
-  const { members, id, memberJoin, lastMessage, typingMember } = props.chanel;
-  const memberFriend = members.filter((mem: any) => mem.id !== meId)[0];
+  const { members, _id, memberJoin, lastMessage, typingMember } = props.chanel;
+  const memberFriend = members.filter((mem: any) => mem._id !== meId)[0];
 
-  const chanelNotSeen = notSeenChanels.find((item: any) => item.chanel == id);
+  const chanelNotSeen = notSeenChanels.find((item: any) => item.chanel == _id);
 
   return (
-    <Link to={`${process.env.REACT_APP_ROUTE_CHANEL}/${id}`}>
+    <Link to={`${process.env.REACT_APP_ROUTE_CHANEL}/${_id}`}>
       <div
         className={`chanel-layout-item ${
-          location.pathname.includes(id) ? "chanel-layout-item--active" : ""
+          location.pathname.includes(_id) ? "chanel-layout-item--active" : ""
         } `}
       >
         <div className="chanel-layout-item-avatar">
@@ -57,9 +57,15 @@ const ChanelLayoutItem = (props: PropTypes) => {
               <div className="dot-typing"></div>
             ) : (
               <span>
-                {lastMessage?.content
+                {lastMessage?._id
                   ? lastMessage.sender === meId
-                    ? `Bạn: ${lastMessage.content}`
+                    ? `Bạn: ${
+                        lastMessage.attachments.length > 0
+                          ? "gửi một tệp tin"
+                          : lastMessage.content
+                      }`
+                    : lastMessage.attachments.length > 0
+                    ? "gửi một tệp tin"
                     : lastMessage.content
                   : "Hãy bắt đầu cuộc trò chuyện"}
               </span>

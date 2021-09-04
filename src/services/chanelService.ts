@@ -25,6 +25,19 @@ export const sendMessage = (data: any) => {
   );
 };
 
+export const updateMessage = (data: any) => {
+  return apiGlobal.put(
+    replaceParamUrl(chanelUrl.updateMessage, [data.chanelId]),
+    data
+  );
+};
+
+export const deleteMessage = (data: any) => {
+  return apiGlobal.delete(
+    replaceParamUrl(chanelUrl.deleteMessage, [data.chanelId, data._id])
+  );
+};
+
 export const getMessages = (data: any) => {
   const { dateBefore, pageSize, chanelId } = data;
   return apiGlobal.get(

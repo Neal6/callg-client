@@ -40,8 +40,24 @@ export const sendMessage = (payload: payloadType) => {
   return { type: actions.sendMessage, payload: payload };
 };
 
+export const updateMessage = (payload: payloadType) => {
+  return { type: actions.updateMessage, payload: payload };
+};
+
+export const deleteMessage = (payload: payloadType) => {
+  return { type: actions.deleteMessage, payload: payload };
+};
+
 export const reciveMessage = (payload: payloadType) => {
   return { type: actions.recieveMessage, payload: payload };
+};
+
+export const reciveUpdateMessage = (payload: payloadType) => {
+  return { type: actions.recieveUpdateMessage, payload: payload };
+};
+
+export const reciveDeleteMessage = (payload: payloadType) => {
+  return { type: actions.recieveDeleteMessage, payload: payload };
 };
 
 export const typingMessage = (payload: payloadType) => {
@@ -50,6 +66,22 @@ export const typingMessage = (payload: payloadType) => {
 
 export const stopTypingMessage = (payload: payloadType) => {
   return { type: actions.stopTypingMessage, payload: payload.body };
+};
+
+export const editMessage = (payload: payloadType) => {
+  return { type: actions.editMessage, payload: payload };
+};
+
+export const clearEditMessage = () => {
+  return { type: actions.clearEditMessage };
+};
+
+export const replyMessage = () => {
+  return { type: actions.replyMessage };
+};
+
+export const clearReplyMessage = () => {
+  return { type: actions.clearReplyMessage };
 };
 
 export const clearCurrentChanel = () => {

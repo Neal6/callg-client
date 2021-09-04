@@ -39,6 +39,20 @@ export const sendMessage = (data: any) => {
   }
 };
 
+export const updateMessage = (data: any) => {
+  const socket = store.getState().socketIo.socket;
+  if (socket) {
+    socket.emit("update-message", data);
+  }
+};
+
+export const deleteMessage = (data: any) => {
+  const socket = store.getState().socketIo.socket;
+  if (socket) {
+    socket.emit("delete-message", data);
+  }
+};
+
 export const typingMessage = (data: any) => {
   const socket = store.getState().socketIo.socket;
   if (socket) {
@@ -57,5 +71,6 @@ export const addUnknownChanel = (data: any) => {
   const socket = store.getState().socketIo.socket;
   if (socket) {
     socket.emit("add-unknown-chanel", data);
+    socket.emit("join-chanel", { chanel: data.chanel });
   }
 };

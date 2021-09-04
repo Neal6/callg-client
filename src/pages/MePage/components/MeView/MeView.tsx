@@ -10,6 +10,7 @@ import "./meView.scss";
 import ButtonBasic from "@components/ButtonBasic/ButtonBasic";
 import LineBreak from "@components/LineBreak/LineBreak";
 import ModalCropImage from "@components/ModalCropImage/ModalCropImage";
+import * as appActions from "@store/actions/appActions";
 import * as authAction from "@store/actions/authActions";
 import * as authType from "@store/actionTypes/authType";
 import * as loadingAction from "@store/actions/loadingAction";
@@ -54,10 +55,19 @@ const MeView = (props: PropTypes) => {
   };
 
   const onSelectAvatar = async (e: any) => {
-    let imageDataUrl = await readFile(e.target.files[0]);
-    setImageSelected(imageDataUrl);
-    setOpenCrop(true);
-    avatarSelectRef.current.value = null;
+    if (e.target.files[0].size > 5 * 1025 * 1024) {
+      dispatch(
+        appActions.showModalGlobal({
+          title: "Lỗi",
+          content: <div>Tệp tin không được quá 5MB</div>,
+        })
+      );
+    } else {
+      let imageDataUrl = await readFile(e.target.files[0]);
+      setImageSelected(imageDataUrl);
+      setOpenCrop(true);
+      avatarSelectRef.current.value = null;
+    }
   };
 
   const readFile = (file: any) => {

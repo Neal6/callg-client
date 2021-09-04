@@ -40,10 +40,10 @@ const ModalCropImage = (props: PropTypes) => {
   const onCropImage = useCallback(async () => {
     try {
       const croppedImage = await getCroppedImg(image, croppedAreaPixels, 0);
+      onCropDone(croppedImage);
       setZoom(1);
       setCroppedAreaPixels(null);
       setCrop({ x: 0, y: 0 });
-      onCropDone(croppedImage);
     } catch (e) {
       console.error(e);
     }

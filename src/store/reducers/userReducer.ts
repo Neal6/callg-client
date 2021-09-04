@@ -95,7 +95,7 @@ const userReducer = (state = initState, action: AnyAction) => {
 
     case userType.friendOnline: {
       const indexUser = state.users.findIndex(
-        (user: any) => user.id === action.payload.body.id
+        (user: any) => user._id === action.payload.body._id
       );
       if (indexUser > -1) {
         const newUsers = state.users;
@@ -122,7 +122,7 @@ const userReducer = (state = initState, action: AnyAction) => {
 
     case userType.friendOffline: {
       const indexUser = state.users.findIndex(
-        (user: any) => user.id === action.payload.body.id
+        (user: any) => user._id === action.payload.body._id
       );
       if (indexUser > -1) {
         const newUsers = state.users;

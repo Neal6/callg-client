@@ -22,26 +22,28 @@ const FriendItem = (props: PropTypes) => {
     (state: any) => state.auth
   );
   const { user } = props;
-  const { avatar, fullName, id, isOnline } = user;
+  const { avatar, fullName, _id, isOnline } = user;
 
   const onRequestFriend = () => {
-    dispatch(userAction.requestFriend({ body: { user: id } }));
+    dispatch(userAction.requestFriend({ body: { user: _id } }));
   };
 
   const onCancelRequest = () => {
-    dispatch(userAction.cancelRequestFriend({ body: { user: id } }));
+    dispatch(userAction.cancelRequestFriend({ body: { user: _id } }));
   };
 
   const onRejectRequest = () => {
-    dispatch(userAction.rejectFriend({ body: { user: id } }));
+    dispatch(userAction.rejectFriend({ body: { user: _id } }));
   };
 
   const onAcceptFriend = () => {
-    dispatch(userAction.acceptFriend({ body: { user: id, avatar, fullName } }));
+    dispatch(
+      userAction.acceptFriend({ body: { user: _id, avatar, fullName } })
+    );
   };
 
   const onUnfriend = () => {
-    dispatch(userAction.unFriend({ body: { user: id, avatar, fullName } }));
+    dispatch(userAction.unFriend({ body: { user: _id, avatar, fullName } }));
   };
 
   const menuAccept = (
@@ -86,13 +88,13 @@ const FriendItem = (props: PropTypes) => {
   );
 
   const onClickMessage = () => {
-    dispatch(chanelAction.getChanelMemberJoin({ body: { members: [id] } }));
+    dispatch(chanelAction.getChanelMemberJoin({ body: { members: [_id] } }));
   };
 
   return (
     <div className="friend-add-item-wrap">
       <div className="friend-add-item">
-        <Link to={`${process.env.REACT_APP_ROUTE_PROFILE}/${id}`}>
+        <Link to={`${process.env.REACT_APP_ROUTE_PROFILE}/${_id}`}>
           <div className="friend-add-item-avatar">
             <ImageWithDefault
               src={avatar}
@@ -107,7 +109,7 @@ const FriendItem = (props: PropTypes) => {
 
         <div className="friend-add-item-info">
           <div className="friend-add-item-name-wrap">
-            <Link to={`${process.env.REACT_APP_ROUTE_PROFILE}/${id}`}>
+            <Link to={`${process.env.REACT_APP_ROUTE_PROFILE}/${_id}`}>
               <div className="friend-add-item-name">{fullName}</div>
             </Link>
             <div
@@ -118,7 +120,7 @@ const FriendItem = (props: PropTypes) => {
               {isOnline ? "Trực tuyến" : "Ngoại tuyến"}
             </div>
           </div>
-          <div className="friend-add-item-info-id">ID: {id}</div>
+          <div className="friend-add-item-info-id">ID: {_id}</div>
         </div>
         <div className="friend-add-item-contact">
           <Tooltip placement="top" title={"Nhắn tin"}>
@@ -138,7 +140,7 @@ const FriendItem = (props: PropTypes) => {
               </svg>
             </div>
           </Tooltip>
-          {friends.includes(id) && (
+          {friends.includes(_id) && (
             <Dropdown
               overlay={menu}
               trigger={["click"]}
@@ -152,14 +154,14 @@ const FriendItem = (props: PropTypes) => {
               </Tooltip>
             </Dropdown>
           )}
-          {!requestFriend.includes(id) && !friends.includes(id) && (
+          {!requestFriend.includes(_id) && !friends.includes(_id) && (
             <Tooltip placement="top" title={"Thêm bạn bè"}>
               <div className="friend-add-item-add" onClick={onRequestFriend}>
                 <FaUserPlus />
               </div>
             </Tooltip>
           )}
-          {requestFriend.includes(id) && (
+          {requestFriend.includes(_id) && (
             <Dropdown overlay={menuAccept} placement="bottomCenter" arrow>
               <Tooltip placement="top" title={"Đang chờ đồng ý"}>
                 <div className="friend-add-item-add friend-add-item-add-accept">
@@ -168,7 +170,7 @@ const FriendItem = (props: PropTypes) => {
               </Tooltip>
             </Dropdown>
           )}
-          {receiveRequestFriend.includes(id) && (
+          {receiveRequestFriend.includes(_id) && (
             <Dropdown overlay={menuConfirm} placement="bottomCenter" arrow>
               <div
                 className="friend-add-item-add-confirm"

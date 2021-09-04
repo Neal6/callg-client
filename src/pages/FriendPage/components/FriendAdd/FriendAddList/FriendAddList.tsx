@@ -33,7 +33,7 @@ const FriendAddList = () => {
             <div className="friend-add-list-title">Kết quả tìm kiếm</div>
           )}
           {users.map((user: any) => (
-            <FriendItem key={user.id} user={user} />
+            <FriendItem key={user._id} user={user} />
           ))}
           {users.length === 0 && loadingSearchUser === false && (
             <>

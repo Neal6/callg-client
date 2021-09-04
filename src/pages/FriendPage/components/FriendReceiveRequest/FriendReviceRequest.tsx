@@ -39,7 +39,7 @@ const FriendReviceRequest = () => {
                 Danh sách lời mời kết bạn
               </div>
               {users.map((user: any) => (
-                <FriendItem key={user._id} user={{ ...user, id: user._id }} />
+                <FriendItem key={user._id} user={user} />
               ))}
             </div>
           )}

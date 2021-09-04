@@ -6,6 +6,7 @@ import * as chanelType from "@store/actionTypes/chanelType";
 import * as authType from "@store/actionTypes/authType";
 import * as chanelService from "@services/chanelService";
 import * as socketService from "@services/socketService";
+import * as authAction from "@store/actions/authActions";
 
 function* getChanelRecent(action: any) {
   yield put({
@@ -52,8 +53,12 @@ function* getChanelMemberJoin(action: any) {
     if (res.data.status === "pending") {
       const meId = yield select((state: any) => state.auth._id);
       socketService.addUnknownChanel({
-        members: res.data.members.filter((mem: any) => mem.id != meId),
+        members: res.data.members.filter((mem: any) => mem._id != meId),
         chanel: res.data._id,
+      });
+      yield put({
+        type: authType.addChanel,
+        payload: { chanel: res.data._id },
       });
     }
     const history = yield select((state: any) => state.app.history);
@@ -73,9 +78,11 @@ function* sendMessage(action: any) {
   try {
     const res = yield chanelService.sendMessage(action.payload.body);
     socketService.sendMessage(res.data);
+
+    // seen message
     yield put({
-      type: authType.sendMessage,
-      payload: { message: res.data },
+      type: authType.seenMessageSuccess,
+      payload: { body: { chanelId: res.data.chanelId } },
     });
     yield put({
       type: chanelType.sendMessageSuccess,
@@ -85,6 +92,37 @@ function* sendMessage(action: any) {
     console.log(error);
     yield put({
       type: chanelType.sendMessageFail,
+    });
+  }
+}
+
+function* updateMessage(action: any) {
+  yield put({
+    type: chanelType.updateMessageStart,
+  });
+  try {
+    const res = yield chanelService.updateMessage(action.payload.body);
+    socketService.updateMessage(res.data);
+    yield put({
+      type: chanelType.updateMessageSuccess,
+      payload: { message: res.data, key: action.payload.key },
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: chanelType.updateMessageFail,
+    });
+  }
+}
+
+function* deleteMessage(action: any) {
+  try {
+    const res = yield chanelService.deleteMessage(action.payload.body);
+    socketService.deleteMessage(action.payload.body);
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: chanelType.deleteMessageFail,
     });
   }
 }
@@ -129,6 +167,8 @@ function* socketSaga() {
   yield takeLatest(chanelType.getChanelRecent, getChanelRecent);
   yield takeLatest(chanelType.getChanel, getChanel);
   yield takeEvery(chanelType.sendMessage, sendMessage);
+  yield takeEvery(chanelType.updateMessage, updateMessage);
+  yield takeEvery(chanelType.deleteMessage, deleteMessage);
   yield takeLatest(chanelType.getMessages, getMessages);
   yield takeLatest(chanelType.getMessagesMore, getMessagesMore);
   yield takeLatest(chanelType.getChanelMemberJoin, getChanelMemberJoin);

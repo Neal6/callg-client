@@ -1,16 +1,20 @@
-import React, { useMemo, useRef } from "react";
-import { useSelector } from "react-redux";
+import React, { useMemo, useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { Tooltip } from "antd";
+import { Tooltip, Dropdown } from "antd";
 import moment from "moment";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { BsReplyFill } from "react-icons/bs";
 import { HiOutlinePencil } from "react-icons/hi";
+import { CgTrash } from "react-icons/cg";
 import Linkify from "react-linkify";
 
 import "./message.scss";
 import ImageWithDefault from "@components/ImageWithDefault/ImageWithDefault";
 import ImageCheckError from "@components/ImageCheckError/ImageCheckError";
+import MessageAttachment from "@components/MessageAttchment/MessageAttachment";
+import * as chanelAction from "@store/actions/chanelAction";
+import DropdownMenu from "@components/DropdownMenu/DropdownMenu";
 
 type PropTypes = {
   message: any;
@@ -21,23 +25,60 @@ type PropTypes = {
 };
 
 const Message = (props: PropTypes) => {
-  const { content, sender, createdAt, key, embeds } = props.message;
+  const dispatch = useDispatch();
+  const {
+    content,
+    sender,
+    createdAt,
+    key,
+    embeds,
+    attachments,
+    _id,
+    chanelId,
+  } = props.message;
   const { withAvatar, members, onScrollToBottom, lastMessage } = props;
   const {
     _id: meId,
     avatar,
     fullName,
   } = useSelector((state: any) => state.auth);
+  const [visibleDropdownOther, setVisibleDropdownOther] =
+    useState<boolean>(false);
   const senderDetail =
     meId === sender
-      ? { id: meId, avatar, name: fullName }
-      : members?.find((mem: any) => mem.id === sender) || {};
+      ? { _id: meId, avatar, name: fullName }
+      : members?.find((mem: any) => mem._id === sender) || {};
   const textRef = useRef<any>();
 
   const onLoadImage = (error: boolean) => {
     if (lastMessage) {
       onScrollToBottom();
     }
+  };
+
+  const onEditMessage = () => {
+    dispatch(chanelAction.editMessage({ body: props.message }));
+  };
+
+  const onDeleteMessage = () => {
+    dispatch(chanelAction.deleteMessage({ body: { _id, chanelId } }));
+  };
+
+  const menuOther = (
+    <DropdownMenu arrow={true}>
+      {meId == sender && (
+        <div
+          className="message-dropdown-menu-other-item message-dropdown-menu-other-item--delete"
+          onClick={onDeleteMessage}
+        >
+          <CgTrash /> Xóa tin nhắn
+        </div>
+      )}
+    </DropdownMenu>
+  );
+
+  const onDropdownOtherChange = (visible: boolean) => {
+    setVisibleDropdownOther(visible);
   };
 
   return (
@@ -70,16 +111,16 @@ const Message = (props: PropTypes) => {
                 </div>
               )}
 
-              {content && (
-                <div
-                  className={`message-content-wrap ${
-                    meId === sender
-                      ? "message-content-wrap--right"
-                      : "message-content-wrap--left"
-                  } ${key ? "message-content-wrap--preview" : ""} ${
-                    embeds?.url ? "message-content-wrap--embeds" : ""
-                  } `}
-                >
+              <div
+                className={`message-content-wrap ${
+                  meId === sender
+                    ? "message-content-wrap--right"
+                    : "message-content-wrap--left"
+                } ${key ? "message-content-wrap--preview" : ""} ${
+                  embeds?.url ? "message-content-wrap--embeds" : ""
+                } `}
+              >
+                {content && (
                   <div className="message-content-text" ref={textRef}>
                     <div className="message-content-text-value">
                       <Linkify
@@ -102,44 +143,56 @@ const Message = (props: PropTypes) => {
                       </Linkify>
                     </div>
                   </div>
-                  {embeds?.url && (
-                    <a href={embeds.url} target="_blank">
-                      <div className="message-content-embeds">
-                        <ImageCheckError
-                          onLoad={onLoadImage}
-                          className="message-content-embeds-image"
-                          src={embeds.images[0]}
-                          imageReplace={
-                            embeds.favicons[0] ||
-                            embeds.favicons[1] ||
-                            embeds.favicons[2]
-                          }
-                          alt={embeds.description}
-                        />
-                        <div className="message-content-embeds-detail">
-                          <div className="message-content-embeds-title">
-                            {embeds.title}
-                          </div>
-                          <div className="message-content-embeds-name">
-                            {embeds.siteName}
-                          </div>
-                          <div className="message-content-embeds-domain">
-                            <ImageCheckError
-                              className="message-content-embeds-favicon"
-                              src={embeds.favicons[0]}
-                            />
-                            <span className="message-content-embeds-url">
-                              {embeds?.url?.split("//")[1]?.split("/")[0]}
-                            </span>
-                          </div>
+                )}
+
+                {embeds?.url && (
+                  <a href={embeds.url} target="_blank">
+                    <div className="message-content-embeds">
+                      <ImageCheckError
+                        onLoad={onLoadImage}
+                        className="message-content-embeds-image"
+                        src={embeds.images[0]}
+                        imageReplace={
+                          embeds.favicons[0] ||
+                          embeds.favicons[1] ||
+                          embeds.favicons[2]
+                        }
+                        alt={embeds.description}
+                        isLazy={false}
+                      />
+                      <div className="message-content-embeds-detail">
+                        <div className="message-content-embeds-title">
+                          {embeds.title}
+                        </div>
+                        <div className="message-content-embeds-name">
+                          {embeds.siteName}
+                        </div>
+                        <div className="message-content-embeds-domain">
+                          <ImageCheckError
+                            className="message-content-embeds-favicon"
+                            src={embeds.favicons[0]}
+                          />
+                          <span className="message-content-embeds-url">
+                            {embeds?.url?.split("//")[1]?.split("/")[0]}
+                          </span>
                         </div>
                       </div>
-                    </a>
-                  )}
-                </div>
-              )}
+                    </div>
+                  </a>
+                )}
+                {attachments && attachments.length > 0 && (
+                  <MessageAttachment
+                    attachments={attachments}
+                    isMe={meId === sender}
+                  />
+                )}
+              </div>
 
-              <div className="message-menu-wrap">
+              <div
+                className={`message-menu-wrap ${
+                  visibleDropdownOther ? "message-menu-wrap--visible" : ""
+                } `}
+              >
                 {!key && (
                   <div
                     className={`message-menu  ${
@@ -161,16 +214,27 @@ const Message = (props: PropTypes) => {
                     </Tooltip>
                     {meId === sender && (
                       <Tooltip placement="top" title={"Chỉnh sửa"}>
-                        <div className="message-menu-icon">
+                        <div
+                          className="message-menu-icon"
+                          onClick={onEditMessage}
+                        >
                           <HiOutlinePencil />
                         </div>
                       </Tooltip>
                     )}
-                    <Tooltip placement="top" title={"Mục khác"}>
-                      <div className="message-menu-icon">
-                        <BiDotsVerticalRounded />
-                      </div>
-                    </Tooltip>
+                    <Dropdown
+                      overlay={menuOther}
+                      trigger={["click"]}
+                      placement="bottomRight"
+                      arrow
+                      onVisibleChange={onDropdownOtherChange}
+                    >
+                      <Tooltip placement="top" title={"Mục khác"}>
+                        <div className="message-menu-icon">
+                          <BiDotsVerticalRounded />
+                        </div>
+                      </Tooltip>
+                    </Dropdown>
 
                     <div
                       className={`message-time ${
@@ -187,7 +251,7 @@ const Message = (props: PropTypes) => {
             </div>
           </div>
         ),
-        [props.message, withAvatar]
+        [props.message, withAvatar, visibleDropdownOther]
       )}
     </>
   );

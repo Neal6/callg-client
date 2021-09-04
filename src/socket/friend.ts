@@ -61,8 +61,7 @@ const friendSocketListener = (socket: any, dispatch: any, useSelector: any) => {
 
   socket.on("offline", (data: any) => {
     try {
-      const { _id, ...restUser } = data;
-      const user = { ...restUser, id: _id };
+      const user = data;
       dispatch(userAction.friendOffline({ body: user }));
     } catch (error) {
       console.log(error);

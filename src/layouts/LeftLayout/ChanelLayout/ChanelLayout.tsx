@@ -111,7 +111,7 @@ const ChanelLayout = () => {
           ) : (
             <div className="chanel-layout-friend-list">
               {chanelList.map((chanel: any) => (
-                <ChanelLayoutItem key={chanel.id} chanel={chanel} />
+                <ChanelLayoutItem key={chanel._id} chanel={chanel} />
               ))}
             </div>
           )}

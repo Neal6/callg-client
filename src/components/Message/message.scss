@@ -50,7 +50,7 @@
 .message {
   max-width: 80%;
   width: 100%;
-  margin-bottom: 6px;
+  margin-top: 4px;
   display: flex;
 
   &--left {
@@ -79,16 +79,23 @@
   }
 
   .message-content-wrap {
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    // box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius: 10px;
     overflow: hidden;
     &--left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       margin-left: 8px;
       .message-content-text {
         background-color: #fff;
+        color: #000;
       }
     }
     &--right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
       .message-content-text {
         background-color: #687ea0;
         color: #fff;
@@ -99,25 +106,31 @@
     }
     &--preview {
       .message-content-text-value {
-        opacity: 0.5;
+        opacity: 0.6;
       }
     }
     &--embeds {
       max-width: 350px;
       min-width: 250px;
+      .message-content-text {
+        border-radius: 0px !important;
+        border-top-left-radius: 10px !important;
+        border-top-right-radius: 10px !important;
+      }
     }
     .message-content-text {
       min-height: 36px;
       padding: 8px 12px;
+      border-radius: 10px;
       .message-content-text-value {
         word-break: break-all;
         white-space: pre-line;
       }
     }
     .message-content-embeds {
+      background-color: #fff !important;
       .message-content-embeds-image {
         width: 100%;
-        background-color: #fff;
       }
       .message-content-embeds-detail {
         width: 100%;
@@ -157,6 +170,9 @@
     align-items: center;
     padding: 0px 8px;
     min-width: 94px;
+    &--visible {
+      opacity: 1;
+    }
   }
 
   .message-menu {
@@ -207,5 +223,25 @@
         left: -40px;
       }
     }
+  }
+}
+
+.message-dropdown-menu-other-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 2px 12px;
+  border-radius: 5px;
+  &:hover {
+    background-color: #efefef6e;
+  }
+
+  svg {
+    margin-right: 4px;
+    font-size: 16px;
+  }
+
+  &--delete {
+    color: red;
   }
 }

@@ -26,7 +26,7 @@ const ChanelHeader = () => {
   const { members, memberJoin } = useSelector(
     (state: any) => state.chanel.currentChanel
   );
-  const memberOthor = members?.filter((mem: any) => mem.id !== meId)[0] || {};
+  const memberOthor = members?.filter((mem: any) => mem._id !== meId)[0] || {};
   const isOnline =
     memberJoin?.filter((mem: any) => mem !== meId)?.length > 0 || false;
   useEffect(() => {
@@ -67,7 +67,7 @@ const ChanelHeader = () => {
               <div className="chanel-header-member">
                 <div className="chanel-header-member-info">
                   <Link
-                    to={`${process.env.REACT_APP_ROUTE_PROFILE}/${memberOthor.id}`}
+                    to={`${process.env.REACT_APP_ROUTE_PROFILE}/${memberOthor._id}`}
                   >
                     <ImageWithDefault
                       className="chanel-header-member-info-avatar"

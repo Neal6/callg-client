@@ -1,5 +1,4 @@
 import React from "react";
-import { Menu } from "antd";
 
 import "./dropdownMenu.scss";
 
@@ -10,9 +9,16 @@ type PropTypes = {
 
 const DropdownMenu = (props: PropTypes) => {
   const { children, arrow, ...rest } = props;
+  //@ts-ignore
+  const { onClick, mode, focusable, selectable, prefixCls } = rest;
   return (
     <div
-      {...rest}
+      onClick={onClick}
+      //@ts-ignore
+      mode={mode}
+      prefixcls={prefixCls}
+      selectable={selectable.toString()}
+      focusable={focusable}
       className={`dropdown-menu  ${!!arrow ? "dropdown-menu-arrow" : ""} `}
     >
       {children}

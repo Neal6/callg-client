@@ -37,7 +37,7 @@ const FriendAll = () => {
             <div className="friend-all-list">
               <div className="friend-all-list-title">Danh sách bạn bè</div>
               {users.map((user: any) => (
-                <FriendItem key={user.id} user={{ ...user, id: user.id }} />
+                <FriendItem key={user._id} user={user} />
               ))}
             </div>
           )}

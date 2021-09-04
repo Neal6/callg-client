@@ -6,14 +6,14 @@ import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { HiPlusCircle } from "react-icons/hi";
 import { IoImage, IoSend, IoClose } from "react-icons/io5";
+import { IoMdAddCircle } from "react-icons/io";
 import { FaHashtag } from "react-icons/fa";
 import { MdGif } from "react-icons/md";
 import { BsFileEarmarkText } from "react-icons/bs";
 import { TiAttachment, TiMicrophone, TiMediaPause } from "react-icons/ti";
-import { CgSmileMouthOpen } from "react-icons/cg";
+import { CgSmileMouthOpen, CgFile } from "react-icons/cg";
 import { Picker } from "emoji-mart-virtualized";
 import AudioPlayer from "react-h5-audio-player";
-import ReactPlayer from "react-player";
 
 import "./chanelForm.scss";
 import DropdownMenu from "@components/DropdownMenu/DropdownMenu";
@@ -50,23 +50,28 @@ const ChanelForm = () => {
   } = useForm<formTypes>({
     defaultValues: {
       message: "",
-      attachments: null,
+      attachments: [],
     },
   });
   const typingMember = useSelector(
     (state: any) => state.chanel.currentChanel.typingMember
+  );
+  const messageEditing = useSelector(
+    (state: any) => state.chanel.currentChanel.messageEditing
   );
   const [showEmoji, setShowEmoji] = useState<boolean>(false);
   const [isVoiceRecord, setIsVoiceRecord] = useState<boolean>(false);
   const [timeRecord, setTimeRecord] = useState<number>(0);
   const [recordUrl, setRecordUrl] = useState<string>("");
   const [filePreview, setFilePreview] = useState<any>([]);
+  const [isDropFile, setIsDropFile] = useState<boolean>(false);
 
   const emojiRef = useRef<any>();
   const cursorPositionRef = useRef<any>();
   const inputTextRef = useRef<any>();
   const recordTimeRef = useRef<any>();
   const recordRef = useRef<any>();
+  const dropFileRef = useRef<any>(false);
 
   useOnClickOutside(emojiRef, () => {
     if (showEmoji) {
@@ -74,12 +79,69 @@ const ChanelForm = () => {
     }
   });
 
+  const onDropOver = (e) => {
+    const dt = e.dataTransfer;
+    if (
+      dt.types &&
+      (dt.types.indexOf
+        ? dt.types.indexOf("Files") != -1
+        : dt.types.contains("Files"))
+    ) {
+      setIsDropFile(true);
+      dropFileRef.current = true;
+    }
+  };
+  const onDropLeave = (e) => {
+    if (
+      e.target.className == "chanel-drag-drop-file-wrap" ||
+      e.target.id === "chanel-drag-drop-file"
+    ) {
+      dropFileRef.current = false;
+      setTimeout(() => {
+        if (!dropFileRef.current) {
+          setIsDropFile(false);
+        }
+      }, 100);
+    }
+  };
+
   useEffect(() => {
-    reset({
-      message: "",
-      attachments: null,
-    });
+    document.addEventListener("dragover", onDropOver);
+    document.addEventListener("dragleave", onDropLeave);
+
+    return () => {
+      document.removeEventListener("dragover", onDropOver);
+      document.removeEventListener("dragleave", onDropLeave);
+    };
+  }, []);
+
+  useEffect(() => {
+    setValue("message", "", { shouldDirty: true });
+    setValue("attachments", [], { shouldDirty: true });
+    setFilePreview([]);
   }, [id]);
+
+  useEffect(() => {
+    const onKeydown = (e) => {
+      if (e.key === "Escape") {
+        setValue("message", "", { shouldDirty: true });
+        setValue("attachments", [], { shouldDirty: true });
+        setFilePreview([]);
+        dispatch(chanelAction.clearEditMessage());
+      }
+    };
+    if (messageEditing?._id) {
+      setValue("message", messageEditing.content, { shouldDirty: true });
+      setValue("attachments", messageEditing.attachments, {
+        shouldDirty: true,
+      });
+      setFilePreview(messageEditing.attachments);
+      document.addEventListener("keydown", onKeydown);
+    }
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [messageEditing]);
 
   useEffect(() => {
     if (isDirty) {
@@ -110,15 +172,16 @@ const ChanelForm = () => {
         }, 1000);
 
         mediaRecorder.ondataavailable = async function (e) {
-          const audioURL = window.URL.createObjectURL(e.data);
+          const audio = new Blob([e.data], { type: "audio/ogg; codecs=opus" });
+          const audioURL = window.URL.createObjectURL(audio);
           setRecordUrl(audioURL);
-          const base64 = await fileConvert.toBase64(e.data);
+          const base64 = await fileConvert.toBase64(audio);
           setValue(
             "attachments",
             [
               {
-                type: e.data.type,
-                size: e.data.size,
+                type: audio.type,
+                size: audio.size,
                 base64,
               },
             ],
@@ -132,9 +195,16 @@ const ChanelForm = () => {
   };
 
   const clearInputFile = () => {
-    document.getElementById("chanel-form-file-image").value = "";
-    document.getElementById("chanel-form-file-gif").value = "";
-    document.getElementById("chanel-form-file").value = "";
+    if (document.getElementById("chanel-form-file-image"))
+      document.getElementById("chanel-form-file-image").value = "";
+    if (document.getElementById("chanel-form-file-gif"))
+      document.getElementById("chanel-form-file-gif").value = "";
+    if (document.getElementById("chanel-form-file"))
+      document.getElementById("chanel-form-file").value = "";
+    if (document.getElementById("chanel-drag-drop-file"))
+      document.getElementById("chanel-drag-drop-file").value = "";
+    if (document.getElementById("chanel-form-file-preivew-add"))
+      document.getElementById("chanel-form-file-preivew-add").value = "";
 
     if (!/safari/i.test(navigator.userAgent)) {
       document.getElementById("chanel-form-file-image").type = "";
@@ -145,10 +215,19 @@ const ChanelForm = () => {
 
       document.getElementById("chanel-form-file").type = "";
       document.getElementById("chanel-form-file").type = "file";
+
+      document.getElementById("chanel-drag-drop-file").type = "";
+      document.getElementById("chanel-drag-drop-file").type = "file";
+
+      document.getElementById("chanel-drag-drop-file").type = "";
+      document.getElementById("chanel-drag-drop-file").type = "file";
     }
   };
 
   const onChangeFileImport = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDropFile(false);
     try {
       const files = Array.from(e.target.files);
       const filterSizeFiles = files.filter(
@@ -166,23 +245,36 @@ const ChanelForm = () => {
         filterSizeFiles.map((file) => fileConvert.toBase64(file))
       );
 
-      const filePreviewMap = [
-        ...filePreview,
-        ...filterSizeFiles.map((file: any, index: number) => ({
-          key: new Date().getTime() + file.name,
-          name: file.name,
-          size: file.size,
-          type: file.type,
-          base64: filesBase64[index],
-          url:
+      const filePreviewDimension = await Promise.all(
+        filterSizeFiles.map(async (file: any, index: number) => {
+          const url =
             file.type.includes("image") || file.type.includes("video")
               ? URL.createObjectURL(file)
-              : "",
-        })),
-      ];
+              : "";
+          let dimension = {};
+          if (file.type.includes("image")) {
+            dimension = await fileConvert.getDimensionImage(url);
+          }
+          if (file.type.includes("video")) {
+            dimension = await fileConvert.getDimensionVideo(url);
+          }
 
+          return {
+            key: new Date().getTime() + file.name,
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            base64: filesBase64[index],
+            url,
+            dimension,
+          };
+        })
+      );
+
+      const filePreviewMap = [...filePreview, ...filePreviewDimension];
       setFilePreview(filePreviewMap);
       setValue("attachments", filePreviewMap, { shouldDirty: true });
+      inputTextRef.current.focus();
       clearInputFile();
     } catch (error) {
       console.log(error);
@@ -190,13 +282,9 @@ const ChanelForm = () => {
   };
 
   const onRemoveFileImport = (file: any) => () => {
-    const filePreviewFilter = filePreview.filter((f) => f.key !== file);
+    const filePreviewFilter = filePreview.filter((f) => f.url !== file);
     setFilePreview(filePreviewFilter);
-    setValue(
-      "attachments",
-      filePreviewFilter.length > 0 ? filePreviewFilter : null,
-      { shouldDirty: true }
-    );
+    setValue("attachments", filePreviewFilter, { shouldDirty: true });
   };
 
   const menuLeft = (
@@ -250,7 +338,7 @@ const ChanelForm = () => {
               id="chanel-form-file"
               multiple
               accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-              text/plain, application/pdf, .csv"
+              text/plain, application/pdf, .csv, .odt, .odp"
               onChange={onChangeFileImport}
               hidden
             />
@@ -293,21 +381,35 @@ const ChanelForm = () => {
 
   const onSubmit = (data: any) => {
     if (isDirty) {
-      reset();
+      if (messageEditing?._id) {
+        dispatch(
+          chanelAction.updateMessage({
+            body: {
+              ...messageEditing,
+              content: data.message,
+              attachments: data.attachments,
+            },
+            key: messageEditing._id,
+          })
+        );
+      } else {
+        dispatch(
+          chanelAction.sendMessage({
+            body: {
+              sender: meId,
+              chanelId: id,
+              content: data.message,
+              attachments: data.attachments,
+              reactions: [],
+            },
+            key: new Date().getTime(),
+          })
+        );
+      }
       resetRecord();
+      setValue("message", "", { shouldDirty: true });
+      setValue("attachments", [], { shouldDirty: true });
       setFilePreview([]);
-      dispatch(
-        chanelAction.sendMessage({
-          body: {
-            sender: meId,
-            chanelId: id,
-            content: data.message,
-            attachments: data.attachments || [],
-            reactions: [],
-          },
-          key: new Date().getTime(),
-        })
-      );
     }
   };
 
@@ -355,8 +457,33 @@ const ChanelForm = () => {
 
   return (
     <>
+      {isDropFile && (
+        <>
+          <div className="chanel-drag-drop-file-wrap"></div>
+          <div className="chanel-drag-drop-file">
+            <label htmlFor="chanel-drag-drop-file">
+              <CgFile className="chanel-drag-drop-file-icon" />
+              <p className="chanel-drag-drop-file-text">Thả tệp tại đây</p>
+            </label>
+            <input
+              multiple
+              accept="image/jpeg, image/png, image/jpg, video/*, image/gif, image/webp, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                      text/plain, application/pdf, .csv"
+              type="file"
+              id="chanel-drag-drop-file"
+              onChange={onChangeFileImport}
+            />
+          </div>
+        </>
+      )}
+
       {!errorGetChanel && (
         <form onSubmit={handleSubmit(onSubmit)} className="chanel-form">
+          {messageEditing?._id && (
+            <div className="chanel-form-text-eidt-note">
+              Nhấn <span>Esc</span> để hủy chỉnh sửa
+            </div>
+          )}
           {isVoiceRecord ? (
             <div className="chanel-form-voice">
               <div className="chanel-form-voice-close" onClick={resetRecord}>
@@ -404,13 +531,13 @@ const ChanelForm = () => {
                           ? "chanel-form-file-preivew-item--video"
                           : ""
                       }`}
-                      key={file.key}
+                      key={file.url}
                     >
                       {file.type.includes("image") && (
                         <img src={file.url} alt={file.name} />
                       )}
                       {file.type.includes("video") && (
-                        <video height="60" src={file.url} />
+                        <video height="60" width="60" src={file.url} />
                       )}
                       {!file.type.includes("image") &&
                         !file.type.includes("video") && (
@@ -423,12 +550,26 @@ const ChanelForm = () => {
                         )}
                       <div
                         className="chanel-form-file-preivew-item-close"
-                        onClick={onRemoveFileImport(file.key)}
+                        onClick={onRemoveFileImport(file.url)}
                       >
                         <IoClose />
                       </div>
                     </div>
                   ))}
+                  <div className="chanel-form-file-preivew-add-wrap">
+                    <label htmlFor="chanel-form-file-preivew-add">
+                      <IoMdAddCircle className="chanel-form-file-preivew-add-icon" />
+                    </label>
+                    <input
+                      multiple
+                      accept="image/jpeg, image/png, image/jpg, video/*, image/gif, image/webp, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                      text/plain, application/pdf, .csv, .odt, .odp"
+                      type="file"
+                      id="chanel-form-file-preivew-add"
+                      hidden
+                      onChange={onChangeFileImport}
+                    />
+                  </div>
                 </div>
               )}
 
@@ -518,7 +659,7 @@ const ChanelForm = () => {
         {typingMember?.length > 0 && (
           <div className="chanel-typing-info">
             {typingMember.map((mem: any, index: number) => (
-              <div key={mem.id}>
+              <div key={mem._id}>
                 <img
                   className="chanel-typing-info-avatar"
                   src={mem.avatar}
